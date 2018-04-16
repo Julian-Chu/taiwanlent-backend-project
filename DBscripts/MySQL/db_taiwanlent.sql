@@ -16,7 +16,8 @@ CREATE TABLE `gender`
  `gender_id` INT NOT NULL ,
  `gender`    VARCHAR(10) NOT NULL ,
 
-PRIMARY KEY (`gender_id`)
+PRIMARY KEY (`gender_id`),
+CONSTRAINT `UC_gender` UNIQUE (`gender`),
 );
 -- ************************************** `subject`
 CREATE TABLE `subject`
@@ -25,7 +26,8 @@ CREATE TABLE `subject`
  `subject_value` VARCHAR(10) NOT NULL ,
  `subject_label` VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (`subject_id`)
+PRIMARY KEY (`subject_id`),
+CONSTRAINT `UC_subject` UNIQUE (`subject_value`, `subject_label`)
 );
 -- ************************************** `region`
 CREATE TABLE `region`
@@ -34,7 +36,8 @@ CREATE TABLE `region`
  `region_value` VARCHAR(10) NOT NULL ,
  `region_label` VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (`region_id`)
+PRIMARY KEY (`region_id`),
+CONSTRAINT `UC_region` UNIQUE (`region_value`, `subject_label`)
 );
 -- ************************************** `user_personal`
 CREATE TABLE `user_personal`
@@ -65,14 +68,16 @@ CREATE TABLE `user_personal`
  `region_id`             INT NOT NULL ,
  `subject_id`            INT NOT NULL ,
  `photolink`             VARCHAR(45) ,
-
+ `create_at`             DATE NOT NULL ,
+ `change_at`             DATE NOT NULL ,
 PRIMARY KEY (`user_personal_id`),
 KEY `fkIdx_196` (`gender_id`),
 CONSTRAINT `FK_196` FOREIGN KEY `fkIdx_196` (`gender_id`) REFERENCES `gender` (`gender_id`),
 KEY `fkIdx_201` (`region_id`),
 CONSTRAINT `FK_201` FOREIGN KEY `fkIdx_201` (`region_id`) REFERENCES `region` (`region_id`),
 KEY `fkIdx_205` (`subject_id`),
-CONSTRAINT `FK_205` FOREIGN KEY `fkIdx_205` (`subject_id`) REFERENCES `subject` (`subject_id`)
+CONSTRAINT `FK_205` FOREIGN KEY `fkIdx_205` (`subject_id`) REFERENCES `subject` (`subject_id`),
+CONSTRAINT `UC_user_personal` UNIQUE (`username`, `email`)
 );
 -- ************************************** `user_business`
 CREATE TABLE `user_business`
@@ -90,10 +95,13 @@ CREATE TABLE `user_business`
  `industry`             VARCHAR(50) NOT NULL ,
  `product_introduction` VARCHAR(250) NOT NULL ,
  `gender_id`            INT NOT NULL ,
+ `create_at`             DATE NOT NULL ,
+ `change_at`             DATE NOT NULL ,
 
 PRIMARY KEY (`user_business_id`),
 KEY `fkIdx_192` (`gender_id`),
-CONSTRAINT `FK_192` FOREIGN KEY `fkIdx_192` (`gender_id`) REFERENCES `gender` (`gender_id`)
+CONSTRAINT `FK_192` FOREIGN KEY `fkIdx_192` (`gender_id`) REFERENCES `gender` (`gender_id`),
+CONSTRAINT `UC_user_business` UNIQUE (`username`, `email`)
 );
 -- ************************************** `user`
 CREATE TABLE `user`
