@@ -116,5 +116,6 @@ PRIMARY KEY (`user_id`),
 KEY `fkIdx_135` (`user_business_id`),
 CONSTRAINT `FK_135` FOREIGN KEY `fkIdx_135` (`user_business_id`) REFERENCES `user_business` (`user_business_id`),
 KEY `fkIdx_171` (`user_personal_id`),
-CONSTRAINT `FK_171` FOREIGN KEY `fkIdx_171` (`user_personal_id`) REFERENCES `user_personal` (`user_personal_id`)
+CONSTRAINT `FK_171` FOREIGN KEY `fkIdx_171` (`user_personal_id`) REFERENCES `user_personal` (`user_personal_id`),
+CONSTRAINT `UC_user` UNIQUE (`google_id`, `fackbook_id`, `user_business_id`, `user_personal_id`)
 );
