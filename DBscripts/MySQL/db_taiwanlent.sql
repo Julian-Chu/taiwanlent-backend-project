@@ -10,6 +10,16 @@ DROP TABLE `region`;
 DROP SCHEMA `taiwanlent`;
 CREATE SCHEMA `taiwanlent`;
 
+-- ************************************** `admin`
+
+CREATE TABLE `admin`
+(
+ `admin_user` VARCHAR(25) NOT NULL ,
+ `password`   VARCHAR(25) NOT NULL ,
+
+PRIMARY KEY (`admin_user`)
+);
+
 -- ************************************** `gender`
 CREATE TABLE `gender`
 (
