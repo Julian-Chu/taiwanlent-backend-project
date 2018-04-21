@@ -47,7 +47,7 @@ CREATE TABLE `region`
  `region_label` VARCHAR(45) NOT NULL ,
 
 PRIMARY KEY (`region_id`),
-CONSTRAINT `UC_region` UNIQUE (`region_value`, `subject_label`)
+CONSTRAINT `UC_region` UNIQUE (`region_value`, `region_label`)
 );
 -- ************************************** `user_personal`
 CREATE TABLE `user_personal`
