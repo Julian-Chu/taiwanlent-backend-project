@@ -1,0 +1,3 @@
+INSERT INTO taiwanlent.user_personal(
+	username, password, email, name, phone, city, occupation, living_year_in_germany, school, work_experience_1, work_experience_2, work_experience_3, german, english, chinese, driving_licence, relocation, self_introduction, german_certificate, english_certificate, chinese_certificate, gender_id, region_id, subject_id, photolink, create_at, change_at)
+	VALUES ('test', '1234', 'test@testmail.com', 'John Test', '12121212', 'Berlin', 'Freelancer', 3, 'TU Berlin', null, null, null, true , false, true, true, false, null, null, null, null, 1, 2, 1, 'photo', now() , now());
