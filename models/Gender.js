@@ -10,13 +10,16 @@ const Gender = sequelize.define('gender',{
   },
   gender:{
     type: Sequelize.STRING(10),
+    field:'gender'
   }
 },{
   freezeTableName: true,
   timestamps: false
 } );
 
-Gender.findAll().then(genders=>{
-  console.log(genders);
-})
+// Gender.findAll().then(genders=>{
+//   console.log(genders);
+// })
+
+module.exports = Gender;
 

@@ -1,5 +1,6 @@
 const sequelize = require('../services/sequelize').sequelize;
 const Sequelize = require('sequelize');
+const Gender = require('./Gender');
 
 const PersonalUser = sequelize.define('user_personal',{
   userId: {
@@ -53,14 +54,23 @@ const PersonalUser = sequelize.define('user_personal',{
   german: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  gender_id: {
+    type: Sequelize.INTEGER,
   }
-
-
 },{
   freezeTableName: true,
   timestamps: false
 } );
 
-PersonalUser.findAll().then(users=>{
-  console.log(users)
+PersonalUser.belongsTo(Gender, {foreignKey: 'gender_id'});
+
+PersonalUser.findAll({
+  include: [{
+    model: Gender,
+    required: true
+  }]
+}).then(users=>{
+  console.log(users);
+  users.map(user=>console.log(user));
 })
