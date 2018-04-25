@@ -22,8 +22,8 @@ const Subject = sequelize.define('subject',{
   timestamps: false
 } );
 
-Subject.findAll().then(subjects =>{
-  console.log(subjects);
-})
+// Subject.findAll().then(subjects =>{
+//   console.log(subjects);
+// })
 
 module.exports = Subject;

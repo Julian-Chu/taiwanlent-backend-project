@@ -1,6 +1,8 @@
 const sequelize = require('../services/sequelize').sequelize;
 const Sequelize = require('sequelize');
 const Gender = require('./Gender');
+const Region = require('./Region');
+const Subject = require('./Subject');
 
 const PersonalUser = sequelize.define('user_personal',{
   userId: {
@@ -57,6 +59,12 @@ const PersonalUser = sequelize.define('user_personal',{
   },
   gender_id: {
     type: Sequelize.INTEGER,
+  },
+  region_id:{
+    type: Sequelize.INTEGER
+  },
+  subject_id: {
+    type: Sequelize.INTEGER
   }
 },{
   freezeTableName: true,
@@ -64,13 +72,30 @@ const PersonalUser = sequelize.define('user_personal',{
 } );
 
 PersonalUser.belongsTo(Gender, {foreignKey: 'gender_id'});
+PersonalUser.belongsTo(Region, {foreignKey: 'region_id'});
+PersonalUser.belongsTo(Subject, {foreignKey: 'subject_id'});
 
 PersonalUser.findAll({
-  include: [{
+  include: [
+  {
     model: Gender,
     // required: true
-  }]
+  },
+  {
+    model: Subject
+  },
+  {
+   model: Region 
+  }
+
+
+]
 }).then(users=>{
   // console.log(users);
-  users.map(user=>console.log(user.gender.dataValues.gender));
+  users.map(user=>{
+    console.log(user.gender.dataValues.gender);
+    console.log(user.region.dataValues.label);
+    console.log(user.subject.dataValues.label);
+  
+  });
 })

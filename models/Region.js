@@ -22,8 +22,8 @@ const Region = sequelize.define('region',{
   timestamps: false
 } );
 
-Region.findAll().then(regions=>{
-  console.log(regions);
-})
+// Region.findAll().then(regions=>{
+//   console.log(regions);
+// })
 
 module.exports = Region;
