@@ -22,4 +22,3 @@ const Gender = sequelize.define('gender',{
 // })
 
 module.exports = Gender;
-

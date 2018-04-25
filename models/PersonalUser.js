@@ -68,9 +68,9 @@ PersonalUser.belongsTo(Gender, {foreignKey: 'gender_id'});
 PersonalUser.findAll({
   include: [{
     model: Gender,
-    required: true
+    // required: true
   }]
 }).then(users=>{
-  console.log(users);
-  users.map(user=>console.log(user));
+  // console.log(users);
+  users.map(user=>console.log(user.gender.dataValues.gender));
 })
