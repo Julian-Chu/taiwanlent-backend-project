@@ -132,6 +132,5 @@ PersonalUser.findAll({
     console.log(user.region.dataValues.label);
     // console.log(user.subject.dataValues.label)
     console.log(user);
-  
   });
 })
