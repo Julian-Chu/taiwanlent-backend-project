@@ -82,7 +82,7 @@ CREATE TABLE user_personal
  gender_id             INT NOT NULL ,
  region_id             INT NOT NULL ,
  subject_id            INT NOT NULL ,
- photolink             VARCHAR(50) ,
+ photolink             VARCHAR(2083) ,
  create_at             DATE NOT NULL ,
  change_at             DATE NOT NULL ,
 PRIMARY KEY (user_personal_id),
