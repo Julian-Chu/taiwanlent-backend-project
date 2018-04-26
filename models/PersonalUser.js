@@ -12,10 +12,10 @@ const PersonalUser = sequelize.define('user_personal',{
     field: 'user_personal_id'
   },
   password:{
-    type: Sequelize.STRING(50),
+    type: Sequelize.STRING(25),
   },
   username:{
-    type: Sequelize.STRING(50)
+    type: Sequelize.STRING(25)
   },
   email: {
     type: Sequelize.STRING(320)
@@ -57,15 +57,57 @@ const PersonalUser = sequelize.define('user_personal',{
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  english: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  chinese: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  drivingLicence: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    field: 'driving_licence'
+  },
+  
+  relocation: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  selfIntroduction: {
+    type: Sequelize.STRING(250),
+    defaultValue: false
+  },
+  germanCertificate: {
+    type: Sequelize.STRING(50),
+    defaultValue: false,
+    field: 'german_certificate'
+  },
+  englishCertificate:{
+    type: Sequelize.STRING(50),
+    defaultValue: false,
+    field: 'english_certificate'
+  },
+  chineseCertificate:{
+    type: Sequelize.STRING(50),
+    defaultValue: false,
+    field: 'chinese_certificate'
+  },
+
   gender_id: {
     type: Sequelize.INTEGER,
   },
   region_id:{
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   subject_id: {
     type: Sequelize.INTEGER
-  }
+  },
+  photolink:{
+    type: Sequelize.STRING(2083),
+    defaultValue: false,
+  },
 },{
   freezeTableName: true,
   timestamps: false
@@ -77,25 +119,19 @@ PersonalUser.belongsTo(Subject, {foreignKey: 'subject_id'});
 
 PersonalUser.findAll({
   include: [
-  {
-    model: Gender,
+  { model: Gender,
     // required: true
   },
-  {
-    model: Subject
-  },
-  {
-   model: Region 
-  }
-
-
+  { model: Subject},
+  { model: Region }
 ]
 }).then(users=>{
   // console.log(users);
   users.map(user=>{
     console.log(user.gender.dataValues.gender);
     console.log(user.region.dataValues.label);
-    console.log(user.subject.dataValues.label);
+    // console.log(user.subject.dataValues.label)
+    console.log(user);
   
   });
 })
