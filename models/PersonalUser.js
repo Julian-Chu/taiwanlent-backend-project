@@ -77,7 +77,8 @@ const PersonalUser = sequelize.define('user_personal',{
   },
   selfIntroduction: {
     type: Sequelize.STRING(250),
-    defaultValue: false
+    defaultValue: false,
+    field: 'self_introduction'
   },
   germanCertificate: {
     type: Sequelize.STRING(50),
@@ -121,20 +122,23 @@ PersonalUser.belongsTo(Gender, {foreignKey: 'gender_id'});
 PersonalUser.belongsTo(Region, {foreignKey: 'region_id'});
 PersonalUser.belongsTo(Subject, {foreignKey: 'subject_id'});
 
-PersonalUser.findAll({
-  include: [
-  { model: Gender,
-    // required: true
-  },
-  { model: Subject},
-  { model: Region }
-]
-}).then(users=>{
-  // console.log(users);
-  users.map(user=>{
-    console.log(user.gender.dataValues.gender);
-    console.log(user.region.dataValues.label);
-    // console.log(user.subject.dataValues.label)
-    console.log(user);
-  });
-})
+module.exports = PersonalUser;
+
+// code for test
+// PersonalUser.findAll({
+//   include: [
+//   { model: Gender,
+//     // required: true
+//   },
+//   { model: Subject},
+//   { model: Region }
+// ]
+// }).then(users=>{
+//   // console.log(users);
+//   users.map(user=>{
+//     console.log(user.gender.dataValues.gender);
+//     console.log(user.region.dataValues.label);
+//     // console.log(user.subject.dataValues.label)
+//     console.log(user);
+//   });
+// })

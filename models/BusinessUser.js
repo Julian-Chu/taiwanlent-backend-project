@@ -60,5 +60,6 @@ const  BusinessUser = sequelize.define('user_business',{
 
 BusinessUser.belongsTo(Gender,{foreignKey: 'gender_id'});
 
-BusinessUser.findAll({include:[{model:Gender}]})
-          .then(users=> users.map(user=>console.log(user)));
+// code for test
+// BusinessUser.findAll({include:[{model:Gender}]})
+//           .then(users=> users.map(user=>console.log(user)));
