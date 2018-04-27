@@ -110,6 +110,7 @@ CREATE TABLE user_business
  gender_id            INT NOT NULL ,
  create_at             DATE NOT NULL ,
  change_at             DATE NOT NULL ,
+ email_verified boolean NOT NULL,
 PRIMARY KEY (user_business_id),
 FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
 CONSTRAINT UC_user_business UNIQUE (username, email)

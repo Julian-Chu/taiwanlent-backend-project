@@ -49,6 +49,10 @@ const  BusinessUser = sequelize.define('user_business',{
     type: Sequelize.INTEGER,
     field: 'gender_id'
   },
+  emailVerified: {
+    type: Sequelize.BOOLEAN,
+    field:'email_verified'
+  }
 },{
   freezeTableName: true,
   timestamps: false
