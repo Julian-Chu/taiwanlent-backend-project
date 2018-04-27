@@ -85,6 +85,7 @@ CREATE TABLE user_personal
  photolink             VARCHAR(2083) ,
  create_at             DATE NOT NULL ,
  change_at             DATE NOT NULL ,
+ resume_open boolean NOT NULL DEFAULT false,
 PRIMARY KEY (user_personal_id),
 FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
 FOREIGN KEY (region_id) REFERENCES region (region_id),
@@ -109,7 +110,6 @@ CREATE TABLE user_business
  gender_id            INT NOT NULL ,
  create_at             DATE NOT NULL ,
  change_at             DATE NOT NULL ,
-
 PRIMARY KEY (user_business_id),
 FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
 CONSTRAINT UC_user_business UNIQUE (username, email)

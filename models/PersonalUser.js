@@ -108,6 +108,10 @@ const PersonalUser = sequelize.define('user_personal',{
     type: Sequelize.STRING(2083),
     defaultValue: false,
   },
+  resumeIsOpened: {
+    type: Sequelize.BOOLEAN,
+    field: 'resume_open'
+  }
 },{
   freezeTableName: true,
   timestamps: false
