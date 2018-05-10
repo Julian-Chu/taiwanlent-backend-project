@@ -60,6 +60,37 @@ const  BusinessUser = sequelize.define('user_business',{
 
 BusinessUser.belongsTo(Gender,{foreignKey: 'gender_id'});
 
+
+module.exports =  BusinessUser;
+
 // code for test
 // BusinessUser.findAll({include:[{model:Gender}]})
 //           .then(users=> users.map(user=>console.log(user)));
+
+
+  // BusinessUser.findOne({
+  //   where: {
+  //     username: 'test_businessUr'
+  //   },
+  //   attributes:['userId', 'username', 'password']
+  // }).then(user => {
+  //     console.log(user);
+  //     console.log(user.dataValues);
+  //     console.log('1234'=== user.dataValues.password);
+  // }).catch(err=>{
+  //   console.log('err',err);
+  // })
+
+//   async function getUser(){
+//   const user = await BusinessUser.findOne({
+//     where: {
+//       username: 'test_businessUr'
+//     },
+//     attributes:['userId', 'username', 'password']
+//   });
+//   if(!user) console.log('user is null or undefined:', user);
+//   if(user) console.log('user:', user);
+// }
+
+// getUser();
+// BusinessUser.findById(2).catch(err=>console.log('err:', err)).then(user=>console.log(user));
