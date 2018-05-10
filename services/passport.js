@@ -8,11 +8,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
 const dic = require('../dic');
 
-console.log('init Passport Config...');
 const businessUserLocalLogin = new LocalStrategy(async (username, password, done) => {
-  console.log('in passport:');
-  console.log('username:', username);
-  console.log('password:', password);
   try {
     const user = await BusinessUser.findOne({
       where: {
@@ -21,6 +17,7 @@ const businessUserLocalLogin = new LocalStrategy(async (username, password, done
       attributes: ['userId', 'username', 'password']
     });
     if (!user || password !== user.dataValues.password) {
+      // todo: hash and salt
       return done(null, false);
     }
     return done(null, user);    
@@ -30,7 +27,8 @@ const businessUserLocalLogin = new LocalStrategy(async (username, password, done
 });
 
 const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  // jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Bearer <token>
   secretOrKey: keys.jwtSecretKey,
   jsonWebTokenOptions :{
     maxAge: "7d"
