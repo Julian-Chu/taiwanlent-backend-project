@@ -1,6 +1,7 @@
 const passport = require('passport');
 const jwt = require('jwt-simple');
 const keys = require('../config/key');
+const dic = require('../dic');
 
 module.exports = app => {
   app.get(
@@ -23,7 +24,7 @@ module.exports = app => {
     res.redirect('/')
   });
 
-  app.post("/auth/business/signin", passport.authenticate('businessLocalLogin', {session:false})  , (req, res) => {
+  app.post("/auth/business/signin", passport.authenticate(dic.businessLocalLogin, {session:false})  , (req, res) => {
     res.send({
       token: createTokenForUser(req.user)
     });

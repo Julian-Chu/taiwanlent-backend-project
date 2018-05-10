@@ -6,7 +6,9 @@ const BusinessUser = require('../models/BusinessUser');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
+const dic = require('../dic');
 
+console.log('init Passport Config...');
 const businessUserLocalLogin = new LocalStrategy(async (username, password, done) => {
   console.log('in passport:');
   console.log('username:', username);
@@ -45,6 +47,5 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done)=>
     console.log('err', err);
   }
 })
-
-passport.use('businessLocalLogin', businessUserLocalLogin);
-passport.use('businessJwtLogin', businessUserJwtLogin);
+passport.use(dic.businessLocalLogin, businessUserLocalLogin);
+passport.use(dic.businessJwtLogin, businessUserJwtLogin);
