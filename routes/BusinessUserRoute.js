@@ -1,3 +1,5 @@
+// @ts-check
+'use strict'
 const passport = require('passport');
 const dic = require('../dic');
 module.exports = app=>{

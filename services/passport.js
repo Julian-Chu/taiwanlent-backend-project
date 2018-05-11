@@ -1,14 +1,15 @@
+// @ts-check
+'use strict'
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('../config/key');
 const BusinessUser = require('../models/BusinessUser');
 
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 const dic = require('../dic');
 
-const businessUserLocalLogin = new LocalStrategy(async (username, password, done) => {
+const businessUserLocalLogin = new LocalStrategy({session:false}, async (username, password, done) => {
   try {
     const user = await BusinessUser.findOne({
       where: {

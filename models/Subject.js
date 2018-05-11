@@ -18,6 +18,7 @@ const Subject = sequelize.define('subject',{
     field: 'subject_label'
   }
 },{
+  schema: 'taiwanlent',
   freezeTableName: true,
   timestamps: false
 } );

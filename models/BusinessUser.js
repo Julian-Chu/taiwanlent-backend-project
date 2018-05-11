@@ -1,3 +1,5 @@
+// @ts-check
+'use strict';
 const sequelize = require('../services/sequelize').sequelize;
 const Sequelize = require('sequelize');
 const Gender = require('./Gender');
@@ -54,6 +56,7 @@ const  BusinessUser = sequelize.define('user_business',{
     field:'email_verified'
   }
 },{
+  schema: 'taiwanlent',
   freezeTableName: true,
   timestamps: false
 } );

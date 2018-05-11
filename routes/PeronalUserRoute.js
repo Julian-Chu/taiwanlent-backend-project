@@ -1,3 +1,7 @@
+// @ts-check
+'use strict'
+const PersonalUser = require('../models/PersonalUser');
+
 module.exports = app => {
   app.get("/user", (req, res) => {
     PersonalUser.findAll({})
@@ -7,8 +11,10 @@ module.exports = app => {
   app.get("/user/:id", (req, res) => {
     if (req.params.id != 0) {
       console.log(req.params.id);
-      PersonalUser.find({
-          userId: req.params.id,
+      PersonalUser.findOne({
+          where:{
+            userId: req.params.id
+          },
           attributes: { exclude: ['password'] }
         })
         .then(user => res.status(200).json(user));

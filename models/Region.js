@@ -18,6 +18,7 @@ const Region = sequelize.define('region',{
     field: 'region_label'
   }
 },{
+  schema: 'taiwanlent',
   freezeTableName: true,
   timestamps: false
 } );

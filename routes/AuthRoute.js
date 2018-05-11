@@ -1,3 +1,5 @@
+// @ts-check
+'use strict';
 const passport = require('passport');
 const jwt = require('jwt-simple');
 const keys = require('../config/key');
@@ -45,7 +47,7 @@ const signup = function (req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
 
-  if (!email || !password) {
+  if (!username || !password) {
     return res.status(422).send({})
   }
   // todo

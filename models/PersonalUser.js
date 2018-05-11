@@ -114,6 +114,7 @@ const PersonalUser = sequelize.define('user_personal',{
     field: 'resume_open'
   }
 },{
+  schema: 'taiwanlent',
   freezeTableName: true,
   timestamps: false
 } );

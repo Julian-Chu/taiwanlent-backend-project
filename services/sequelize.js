@@ -1,12 +1,11 @@
+//@ts-check
+'use strict'
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('Test','postgres','1234', {
   host: 'localhost',
-  port: '5432',
+  port: 5432,
   dialect: 'postgres',
   operatorsAliases: false,
-
-  schema: 'taiwanlent',
-
   pool: {
     max: 5,
     min: 0,
