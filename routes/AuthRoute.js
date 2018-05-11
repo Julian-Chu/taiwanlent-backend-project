@@ -31,7 +31,7 @@ module.exports = app => {
     session: false
   }), (req, res) => {
     res.send({
-      token: createTokenForUser(req.user)
+      token: createTokenForUser(req.user, true)
     });
   })
 
@@ -60,21 +60,19 @@ module.exports = app => {
     const newUser = BusinessUser.build({
       username,
       password,
-    }).save().then(()=>{
-      return res.status(201).send();
+    }).save().then(user=>{
+      return res.status(201).send({token:createTokenForUser(user, false)});
     })
-
-
-
-    // todo
   })
 }
 
-function createTokenForUser(user) {
+function createTokenForUser(user, verified) {
   console.log('jwt key:', keys.jwtSecretKey);
+  console.log('user:', user);
   const timestamp = new Date().getTime();
   return jwt.encode({
     sub: user.userId,
-    iat: timestamp
+    iat: timestamp,
+    verified
   }, keys.jwtSecretKey)
 }
