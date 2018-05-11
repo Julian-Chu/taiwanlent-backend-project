@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jwt-simple');
 const keys = require('../config/key');
 const dic = require('../dic');
+const BusinessUser = require('../models/BusinessUser');
 
 module.exports = app => {
   app.get(
@@ -26,10 +27,46 @@ module.exports = app => {
     res.redirect('/')
   });
 
-  app.post("/auth/business/signin", passport.authenticate(dic.businessLocalLogin, {session:false})  , (req, res) => {
+  app.post("/auth/business/signin", passport.authenticate(dic.businessLocalLogin, {
+    session: false
+  }), (req, res) => {
     res.send({
       token: createTokenForUser(req.user)
     });
+  })
+
+  app.post('/auth/business/signup', async (req, res) => {
+
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (!username || !password) {
+      return res.status(400).send({
+        error: 'username or password is empty'
+      });
+    }
+
+    const user = await BusinessUser.findOne({
+      where: {
+        username: username
+      }
+    });
+    if (user) {
+      return res.status(403).send({
+        error: 'username already exists'
+      });
+    }
+
+    const newUser = BusinessUser.build({
+      username,
+      password,
+    }).save().then(()=>{
+      return res.status(201).send();
+    })
+
+
+
+    // todo
   })
 }
 
@@ -40,15 +77,4 @@ function createTokenForUser(user) {
     sub: user.userId,
     iat: timestamp
   }, keys.jwtSecretKey)
-}
-
-
-const signup = function (req, res, next) {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  if (!username || !password) {
-    return res.status(422).send({})
-  }
-  // todo
 }
