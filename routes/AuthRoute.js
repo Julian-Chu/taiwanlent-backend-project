@@ -5,6 +5,7 @@ const jwt = require('jwt-simple');
 const keys = require('../config/key');
 const dic = require('../dic');
 const BusinessUser = require('../models/BusinessUser');
+const bcrypt = require('bcrypt');
 
 module.exports = app => {
   app.get(
@@ -56,10 +57,12 @@ module.exports = app => {
         error: 'username already exists'
       });
     }
+    
+    const hash = await hashPassword(password);
 
     const newUser = BusinessUser.build({
       username,
-      password,
+      password: hash,
     }).save().then(user=>{
       return res.status(201).send({token:createTokenForUser(user, false)});
     })
@@ -75,4 +78,17 @@ function createTokenForUser(user, verified) {
     iat: timestamp,
     verified
   }, keys.jwtSecretKey)
+}
+
+async function hashPassword(plainTextPassword){
+  const saltRounds = 10;
+
+  const hashPassword = await new Promise((resolve, reject)=>{
+    bcrypt.hash(plainTextPassword, saltRounds, (err, res)=>{
+      if(err) reject(err);
+      resolve(res);
+    });
+  })
+
+  return hashPassword;
 }

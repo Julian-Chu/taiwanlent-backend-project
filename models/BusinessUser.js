@@ -15,7 +15,7 @@ const  BusinessUser = sequelize.define('user_business',{
     type: Sequelize.STRING(25)
   },
   password:{
-    type: Sequelize.STRING(25)
+    type: Sequelize.STRING(60)
   },
   email: {
     type: Sequelize.STRING(320)
