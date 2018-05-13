@@ -7,7 +7,7 @@ module.exports = (user) => {
       <h3>Hi ${user.name},  Welcome to Taiwanlent!</h3>
       <p> Please verify your registry</p>
       <div>
-        <a href="${keys.redirectDomain}/auth/business/verification?vtoken=${user.verifyToken}">Verify account</a>
+        <a href="${keys.redirectDomain}/auth/business/verification?token=${user.verifyToken}">Verify account</a>
       </div>
     </div>
   </body>

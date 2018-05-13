@@ -8,6 +8,7 @@ const BusinessUser = require('../models/BusinessUser');
 const bcrypt = require('bcrypt');
 const Mailer = require('../services/Mailer');
 const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
+const vtokenEncryption = require('../services/vtokenEncryption');
 
 module.exports = app => {
   app.get(
@@ -71,19 +72,36 @@ module.exports = app => {
   })
 
   app.get('/auth/business/verification', async (req,res)=>{
-    res.send(req.query.vtoken);
+    const token = JSON.parse(vtokenEncryption.decrypt(req.query.token));
+    if( Date.now() >= token.expiredAt) res.status(400).send({error: 'expired token'});
+    try{
+      let user = await BusinessUser.findById(token.userId, {attributes:['user_business_id','email', 'email_verified']});
+      if(user.email !== token.email)  res.status(400).send({error: 'user data not correct'});
+      console.log(user);
+      await BusinessUser.update({emailVerified: true}, {where:{userId:token.userId}});
+      user=>console.log(user)
+      res.status(204).send('verified');
+      
+    }catch(err){
+      console.log(err);
+      res.status(400).send(err);
+    }
   })
 
   app.post('/auth/business/verification',
             passport.authenticate(dic.businessJwtLogin, {session:false}),  
             async (req, res)=>{
               // console.log('User:',req.user);
+              let token = {
+                  email: req.user.dataValues.email,
+                  expiredAt: Date.now() + 3*24*60*60*1000,
+                  userId: req.user.dataValues.userId
+              }
               let user = {
                  name: req.user.dataValues.name,
-                 verifyToken: req.user.dataValues.userId,
+                 verifyToken: vtokenEncryption.encrypt(JSON.stringify(token)),
                  subject: 'Verify your account! Taiwanlent',
                  email: req.user.dataValues.email
-
               };
               const mailer = new Mailer(user, verifyTemplate(user));
               console.log(user);
