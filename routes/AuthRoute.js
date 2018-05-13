@@ -3,12 +3,12 @@
 const passport = require('passport');
 const jwt = require('jwt-simple');
 const keys = require('../config/key');
-const dic = require('../dic');
 const BusinessUser = require('../models/BusinessUser');
 const bcrypt = require('bcrypt');
 const Mailer = require('../services/Mailer');
 const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
 const vtokenEncryption = require('../services/vtokenEncryption');
+const requireAuth = require('../middlewares/requireAuth');
 
 module.exports = app => {
   app.get(
@@ -31,9 +31,7 @@ module.exports = app => {
     res.redirect('/')
   });
 
-  app.post("/auth/business/signin", passport.authenticate(dic.businessLocalLogin, {
-    session: false
-  }), (req, res) => {
+  app.post("/auth/business/signin", requireAuth.LocalLogin , (req, res) => {
     res.send({
       token: createTokenForUser(req.user, true)
     });
@@ -89,7 +87,7 @@ module.exports = app => {
   })
 
   app.post('/auth/business/verification',
-            passport.authenticate(dic.businessJwtLogin, {session:false}),  
+            requireAuth.JWToken,  
             async (req, res)=>{
               // console.log('User:',req.user);
               let token = {
@@ -128,7 +126,6 @@ function createTokenForUser(user, verified) {
 
 async function hashPassword(plainTextPassword){
   const saltRounds = 10;
-
   const hashPassword = await new Promise((resolve, reject)=>{
     bcrypt.hash(plainTextPassword, saltRounds, (err, res)=>{
       if(err) reject(err);
