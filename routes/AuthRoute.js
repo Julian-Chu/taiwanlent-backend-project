@@ -6,6 +6,8 @@ const keys = require('../config/key');
 const dic = require('../dic');
 const BusinessUser = require('../models/BusinessUser');
 const bcrypt = require('bcrypt');
+const Mailer = require('../services/Mailer');
+const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
 
 module.exports = app => {
   app.get(
@@ -66,6 +68,32 @@ module.exports = app => {
     }).save().then(user=>{
       return res.status(201).send({token:createTokenForUser(user, false)});
     })
+  })
+
+  app.get('/auth/business/verification', async (req,res)=>{
+    res.send(req.query.vtoken);
+  })
+
+  app.post('/auth/business/verification',
+            passport.authenticate(dic.businessJwtLogin, {session:false}),  
+            async (req, res)=>{
+              // console.log('User:',req.user);
+              let user = {
+                 name: req.user.dataValues.name,
+                 verifyToken: req.user.dataValues.userId,
+                 subject: 'Verify your account! Taiwanlent',
+                 email: req.user.dataValues.email
+
+              };
+              const mailer = new Mailer(user, verifyTemplate(user));
+              console.log(user);
+              try{
+                const response = await mailer.send();
+                res.status(201).send(response);                
+              }catch(err){
+                console.log('error to send email verifier');
+                res.status(401).send(err);
+              }
   })
 }
 
