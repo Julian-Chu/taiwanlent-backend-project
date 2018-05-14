@@ -1,6 +1,6 @@
 // @ts-check
 'use strict';
-const passport = require('passport');
+// const passport = require('passport');
 const jwt = require('jwt-simple');
 const keys = require('../config/key');
 const BusinessUser = require('../models/BusinessUser');
@@ -11,20 +11,20 @@ const vtokenEncryption = require('../services/vtokenEncryption');
 const requireAuth = require('../middlewares/requireAuth');
 
 module.exports = app => {
-  app.get(
-    "/auth/google",
-    passport.authenticate('google', {
-      scope: ['profile', 'email']
-    })
-  );
+  // app.get(
+  //   "/auth/google",
+  //   passport.authenticate('google', {
+  //     scope: ['profile', 'email']
+  //   })
+  // );
 
-  app.get(
-    "/auth/google/callback",
-    passport.authenticate('google'),
-    (req, res) => {
-      res.direct('/user')
-    }
-  );
+  // app.get(
+  //   "/auth/google/callback",
+  //   passport.authenticate('google'),
+  //   (req, res) => {
+  //     res.direct('/user')
+  //   }
+  // );
 
   app.get("/auth/logout", (req, res) => {
     req.logout();
@@ -75,13 +75,12 @@ module.exports = app => {
     try{
       let user = await BusinessUser.findById(token.userId, {attributes:['user_business_id','email', 'email_verified']});
       if(user.email !== token.email)  res.status(400).send({error: 'user data not correct'});
-      console.log(user);
+      // console.log(user);
       await BusinessUser.update({emailVerified: true}, {where:{userId:token.userId}});
-      user=>console.log(user)
       res.status(204).send('verified');
       
     }catch(err){
-      console.log(err);
+      // console.log(err);
       res.status(400).send(err);
     }
   })
@@ -102,20 +101,20 @@ module.exports = app => {
                  email: req.user.dataValues.email
               };
               const mailer = new Mailer(user, verifyTemplate(user));
-              console.log(user);
+              // console.log(user);
               try{
                 const response = await mailer.send();
                 res.status(201).send(response);                
               }catch(err){
-                console.log('error to send email verifier');
+                // console.log('error to send email verifier');
                 res.status(401).send(err);
               }
   })
 }
 
 function createTokenForUser(user, verified) {
-  console.log('jwt key:', keys.jwtSecretKey);
-  console.log('user:', user);
+  // console.log('jwt key:', keys.jwtSecretKey);
+  // console.log('user:', user);
   const timestamp = new Date().getTime();
   return jwt.encode({
     sub: user.userId,
