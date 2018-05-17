@@ -3,27 +3,27 @@
 const PersonalUser = require('../models/PersonalUser');
 
 module.exports = app => {
-  app.get("/user", (req, res) => {
-    PersonalUser.findAll({})
-      .then(users => res.status(200).json(users));
-  });
+  // app.get("/user", (req, res) => {
+  //   PersonalUser.findAll({})
+  //     .then(users => res.status(200).json(users));
+  // });
 
-  app.get("/user/:id", (req, res) => {
-    if (req.params.id != 0) {
-      console.log(req.params.id);
-      PersonalUser.findOne({
-          where:{
-            userId: req.params.id
-          },
-          attributes: { exclude: ['password'] }
-        })
-        .then(user => res.status(200).json(user));
-    } else {
-      res.status(400);
-    }
-  });
+  // app.get("/user/:id", (req, res) => {
+  //   if (req.params.id != 0) {
+  //     console.log(req.params.id);
+  //     PersonalUser.findOne({
+  //         where:{
+  //           userId: req.params.id
+  //         },
+  //         attributes: { exclude: ['password'] }
+  //       })
+  //       .then(user => res.status(200).json(user));
+  //   } else {
+  //     res.status(400);
+  //   }
+  // });
 
-  app.post("/user", (req, res) => {
+  app.post("/api/peronsaluser", (req, res) => {
     console.log(req.body);
     const user = PersonalUser.build({
       username: req.username,

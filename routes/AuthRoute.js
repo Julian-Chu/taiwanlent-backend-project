@@ -27,8 +27,7 @@ module.exports = app => {
   // );
 
   app.get("/auth/logout", (req, res) => {
-    req.logout();
-    res.redirect('/')
+    res.redirect('/logout')
   });
 
   app.post("/auth/business/signin", requireAuth.LocalLogin , (req, res) => {
