@@ -1,16 +1,13 @@
 // @ts-check
 'use strict';
-// const passport = require('passport');
-const jwt = require('jwt-simple');
-const keys = require('../config/key');
 const BusinessUser = require('../models/BusinessUser');
-const bcrypt = require('bcrypt');
 const Mailer = require('../services/Mailer');
 const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
 const vtokenEncryption = require('../services/vtokenEncryption');
 const requireAuth = require('../middlewares/requireAuth');
 const hashPassword = require('../utils').hashPassword;
 const createTokenForUser = require('../utils').createTokenForUser;
+
 module.exports = app => {
   // app.get(
   //   "/auth/google",

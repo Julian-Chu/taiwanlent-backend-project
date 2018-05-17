@@ -1,4 +1,9 @@
 
+//@ts-check
+'use strict';
+const bcrypt = require('bcrypt');
+const jwt = require('jwt-simple');
+const keys = require('./config/key');
 async function hashPassword(plainTextPassword){
   const saltRounds = 10;
   const hashPassword = await new Promise((resolve, reject)=>{
