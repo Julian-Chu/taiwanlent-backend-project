@@ -57,13 +57,14 @@ module.exports = app => {
     
     const hash = await hashPassword(password);
 
-    const newUser = BusinessUser.build({
+    const newUser = await BusinessUser.build({
       username,
       password: hash,
       emailVerified:false
-    }).save().then(user=>{
-      return res.status(201).send({token:createToken(user)});
-    })
+    }).save();
+    
+      return res.status(201).send({token:createToken(newUser)});
+    
   })
 
   app.get('/auth/business/verification', async (req,res)=>{
