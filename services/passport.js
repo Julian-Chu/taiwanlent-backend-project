@@ -15,14 +15,15 @@ const businessUserLocalLogin = new LocalStrategy({session:false}, async (usernam
   try {
     const user = await BusinessUser.findOne({
       where: {
-        username: 'test_businessUser'
+        username: username
       },
       attributes: ['userId', 'username', 'password','emailVerified']
     });
-
+    if(!user) return done(null,false);
     const hashedPassword = await utils.hashPassword(password);
-    const hashFromDB = user.dataValues.password;
-    if (!user || !utils.comparePassword(hashedPassword, hashFromDB)) {
+    const hashFromDB = user.password;
+    const isPasswordMatch = await utils.comparePassword(hashedPassword, hashFromDB);
+    if (!isPasswordMatch) {
       return done(null, false);
     }
     return done(null, user);    
