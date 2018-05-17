@@ -1,4 +1,4 @@
-
+const utils = require('../utils');
 // @ts-check
 'use strict';
 const request = require('supertest');
@@ -34,6 +34,7 @@ describe('Authentication',()=>{
       .post('/auth/business/signin')
       .expect(200)
       .expect(res=>{expect(res.body.token).toBeDefined();})
+      .expect(res=> expect(utils.decodeToken(res.body.token)).toMatchObject({sub:'1', verified:false}))
       .end((err,res)=>{
         if(err) done(err);
         done();

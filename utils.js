@@ -16,7 +16,7 @@ async function hashPassword(plainTextPassword){
   return hashPassword;
 };
 
-function createTokenForUser(user) {
+function createToken(user) {
   // console.log('jwt key:', keys.jwtSecretKey);
   // console.log('user:', user);
   const timestamp = new Date().getTime();
@@ -26,6 +26,10 @@ function createTokenForUser(user) {
     verified: user.emailVerified || false
   }, keys.jwtSecretKey)
 };
+
+function decodeToken(token){
+  return jwt.decode(token, keys.jwtSecretKey);
+}
 
 
 async function comparePassword(hashedPassword, hashFromDB){
@@ -41,6 +45,7 @@ async function comparePassword(hashedPassword, hashFromDB){
 
 module.exports ={
   hashPassword,
-  createTokenForUser,
-  comparePassword
+  createToken,
+  comparePassword,
+  decodeToken
 }

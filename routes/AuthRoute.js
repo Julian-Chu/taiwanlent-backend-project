@@ -6,7 +6,7 @@ const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTem
 const vtokenEncryption = require('../services/vtokenEncryption');
 const requireAuth = require('../middlewares/requireAuth');
 const hashPassword = require('../utils').hashPassword;
-const createTokenForUser = require('../utils').createTokenForUser;
+const createToken = require('../utils').createToken;
 
 module.exports = app => {
   // app.get(
@@ -30,7 +30,7 @@ module.exports = app => {
 
   app.post("/auth/business/signin", requireAuth.LocalLogin , (req, res) => {
     res.send({
-      token: createTokenForUser(req.user)
+      token: createToken(req.user)
     });
   })
 
@@ -62,7 +62,7 @@ module.exports = app => {
       password: hash,
       emailVerified:false
     }).save().then(user=>{
-      return res.status(201).send({token:createTokenForUser(user)});
+      return res.status(201).send({token:createToken(user)});
     })
   })
 
