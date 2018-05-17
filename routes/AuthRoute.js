@@ -9,7 +9,8 @@ const Mailer = require('../services/Mailer');
 const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
 const vtokenEncryption = require('../services/vtokenEncryption');
 const requireAuth = require('../middlewares/requireAuth');
-
+const hashPassword = require('../utils').hashPassword;
+const createTokenForUser = require('../utils').createTokenForUser;
 module.exports = app => {
   // app.get(
   //   "/auth/google",
@@ -32,14 +33,13 @@ module.exports = app => {
 
   app.post("/auth/business/signin", requireAuth.LocalLogin , (req, res) => {
     res.send({
-      token: createTokenForUser(req.user, true)
+      token: createTokenForUser(req.user)
     });
   })
 
   app.post('/auth/business/signup', async (req, res) => {
-
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.body.username || null;
+    const password = req.body.password || null;
 
     if (!username || !password) {
       return res.status(400).send({
@@ -63,8 +63,9 @@ module.exports = app => {
     const newUser = BusinessUser.build({
       username,
       password: hash,
+      emailVerified:false
     }).save().then(user=>{
-      return res.status(201).send({token:createTokenForUser(user, false)});
+      return res.status(201).send({token:createTokenForUser(user)});
     })
   })
 
@@ -111,25 +112,3 @@ module.exports = app => {
   })
 }
 
-function createTokenForUser(user, verified) {
-  // console.log('jwt key:', keys.jwtSecretKey);
-  // console.log('user:', user);
-  const timestamp = new Date().getTime();
-  return jwt.encode({
-    sub: user.userId,
-    iat: timestamp,
-    verified
-  }, keys.jwtSecretKey)
-}
-
-async function hashPassword(plainTextPassword){
-  const saltRounds = 10;
-  const hashPassword = await new Promise((resolve, reject)=>{
-    bcrypt.hash(plainTextPassword, saltRounds, (err, res)=>{
-      if(err) reject(err);
-      resolve(res);
-    });
-  })
-
-  return hashPassword;
-}

@@ -9,6 +9,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
 const dic = require('../dic');
 const bcrypt = require('bcrypt');
+const utils = require('../utils');
 
 const businessUserLocalLogin = new LocalStrategy({session:false}, async (username, password, done) => {
   try {
@@ -16,12 +17,12 @@ const businessUserLocalLogin = new LocalStrategy({session:false}, async (usernam
       where: {
         username: 'test_businessUser'
       },
-      attributes: ['userId', 'username', 'password']
+      attributes: ['userId', 'username', 'password','emailVerified']
     });
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await utils.hashPassword(password);
     const hashFromDB = user.dataValues.password;
-    if (!user || !comparePassword(hashedPassword, hashFromDB)) {
+    if (!user || !utils.comparePassword(hashedPassword, hashFromDB)) {
       return done(null, false);
     }
     return done(null, user);    
@@ -50,27 +51,6 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done)=>
   }
 })
 
-async function comparePassword(hashedPassword, hashFromDB){
-  const isEqual = await new Promise((resolve, reject)=>{
-    bcrypt.compare(hashedPassword, hashFromDB,(err,res)=>{
-      if(err) reject(err);
-      resolve(res);
-    });
-  })
-  return isEqual;
-};
 
-async function hashPassword(plainTextPassword){
-  const saltRounds = 10;
-
-  const hashPassword = await new Promise((resolve, reject)=>{
-    bcrypt.hash(plainTextPassword, saltRounds, (err, res)=>{
-      if(err) reject(err);
-      resolve(res);
-    });
-  })
-
-  return hashPassword;
-};
 passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
