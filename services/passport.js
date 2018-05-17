@@ -20,9 +20,8 @@ const businessUserLocalLogin = new LocalStrategy({session:false}, async (usernam
       attributes: ['userId', 'username', 'password','emailVerified']
     });
     if(!user) return done(null,false);
-    const hashedPassword = await utils.hashPassword(password);
     const hashFromDB = user.password;
-    const isPasswordMatch = await utils.comparePassword(hashedPassword, hashFromDB);
+    const isPasswordMatch = await utils.comparePassword(password, hashFromDB);
     if (!isPasswordMatch) {
       return done(null, false);
     }

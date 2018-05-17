@@ -32,7 +32,7 @@ module.exports = app => {
     res.send({
       token: createToken(req.user)
     });
-  })
+  });
 
   app.post('/auth/business/signup', async (req, res) => {
     const username = req.body.username || null;
@@ -62,10 +62,8 @@ module.exports = app => {
       password: hash,
       emailVerified:false
     }).save();
-    
       return res.status(201).send({token:createToken(newUser)});
-    
-  })
+  });
 
   app.get('/auth/business/verification', async (req,res)=>{
     const token = JSON.parse(vtokenEncryption.decrypt(req.query.token));
@@ -81,7 +79,7 @@ module.exports = app => {
       // console.log(err);
       res.status(400).send(err);
     }
-  })
+  });
 
   app.post('/auth/business/verification',
             requireAuth.JWToken,  
