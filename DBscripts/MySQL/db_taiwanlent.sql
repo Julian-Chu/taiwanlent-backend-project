@@ -8,6 +8,7 @@ DROP TABLE `gender`;
 DROP TABLE `subject`;
 DROP TABLE `region`;
 DROP SCHEMA `taiwanlent`;
+-- CREATE DATABASE `taiwanlent`
 CREATE SCHEMA `taiwanlent`;
 
 -- ************************************** `admin`

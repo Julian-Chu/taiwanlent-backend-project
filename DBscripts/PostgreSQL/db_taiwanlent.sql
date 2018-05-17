@@ -1,15 +1,16 @@
--- ****************** PostgreSQL ******************;
--- ***************************************************;
+-- -- ****************** PostgreSQL ******************;
+-- -- ***************************************************;
 
-DROP TABLE IF EXISTS user_general;
-DROP TABLE IF EXISTS user_personal;
-DROP TABLE IF EXISTS user_business;
-DROP TABLE IF EXISTS user_admin;
-DROP TABLE IF EXISTS gender;
-DROP TABLE IF EXISTS subject;
-DROP TABLE IF EXISTS region;
-DROP SCHEMA IF EXISTS taiwanlent CASCADE;
-CREATE SCHEMA taiwanlent;
+DROP TABLE IF EXISTS "user_general";
+DROP TABLE IF EXISTS "user_personal";
+DROP TABLE IF EXISTS "user_business";
+DROP TABLE IF EXISTS "user_admin";
+DROP TABLE IF EXISTS "gender";
+DROP TABLE IF EXISTS "subject";
+DROP TABLE IF EXISTS "region";
+DROP SCHEMA IF EXISTS "taiwanlent" CASCADE;
+
+CREATE SCHEMA "taiwanlent";
 
 SET search_path = taiwanlent;
 

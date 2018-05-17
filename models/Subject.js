@@ -1,30 +1,24 @@
+/* jshint indent: 2 */
 
-const sequelize = require('../services/sequelize').sequelize;
-const Sequelize = require('sequelize');
-
-const Subject = sequelize.define('subject',{
-  subjectId: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    field: 'subject_id'
-  },
-  value: {
-    type: Sequelize.STRING(10),
-    field:'subject_value'
-  },
-  label: {
-    type: Sequelize.STRING(50),
-    field: 'subject_label'
-  }
-},{
-  schema: 'taiwanlent',
-  freezeTableName: true,
-  timestamps: false
-} );
-
-// Subject.findAll().then(subjects =>{
-//   console.log(subjects);
-// })
-
-module.exports = Subject;
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('subject', {
+    subject_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    subject_value: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    subject_label: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true
+    }
+  }, {
+    tableName: 'subject'
+  });
+};

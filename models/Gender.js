@@ -1,27 +1,19 @@
-// @ts-check
-'use strict';
-const sequelize = require('../services/sequelize').sequelize;
-const Sequelize = require('sequelize');
+/* jshint indent: 2 */
 
-const Gender = sequelize.define('gender',{
-  genderId: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    field: 'gender_id'
-  },
-  gender:{
-    type: Sequelize.STRING(10),
-    field:'gender'
-  }
-},{
-  schema: 'taiwanlent',
-  freezeTableName: true,
-  timestamps: false
-} );
-
-// Gender.findAll().then(genders=>{
-//   console.log(genders);
-// })
-
-module.exports = Gender;
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('gender', {
+    gender_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    }
+  }, {
+    tableName: 'gender'
+  });
+};
