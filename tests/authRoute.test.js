@@ -16,10 +16,12 @@ sinon.stub(requireAuth, 'LocalLogin')
     next();
   });
 sinon.stub(BusinessUser, 'findOne')
-  .callsFake((req, res, next) => {
-    return {
-      username: 'Jack',
-    }});
+  .callsFake((arg) => {
+    if (arg.where.username === 'Jack')
+      return {username: 'Jack'};
+    else return null;
+    
+  });
 
 sinon.stub(BusinessUser, 'build')
   .callsFake(() => {
@@ -93,7 +95,20 @@ describe('Authentication', () => {
           if (err) return done(err);
           done();
         })
+    });
+
+    it('returns 201 when add new user', (done) => {
+      request(app)
+        .post('/auth/business/signup')
+        .send({
+          username: 'NotJack',
+          password: '121213'
+        })
+        .expect(201)
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        })
     })
   })
-
 })
