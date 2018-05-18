@@ -85,15 +85,15 @@ module.exports = app => {
             async (req, res)=>{
               // console.log('User:',req.user);
               let token = {
-                  email: req.user.dataValues.email,
+                  email: req.user.email,
                   expiredAt: Date.now() + 3*24*60*60*1000,
-                  userId: req.user.dataValues.userId
+                  userId: req.user.userId
               }
               let user = {
-                 name: req.user.dataValues.name,
+                 name: req.user.name,
                  verifyToken: vtokenEncryption.encrypt(JSON.stringify(token)),
                  subject: 'Verify your account! Taiwanlent',
-                 email: req.user.dataValues.email
+                 email: req.user.email
               };
               const mailer = new Mailer(user, verifyTemplate(user));
               // console.log(user);

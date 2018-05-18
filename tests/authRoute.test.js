@@ -7,6 +7,9 @@ const vtokenEncryption = require('../services/vtokenEncryption');
 
 const requireAuth = require('../middlewares/requireAuth');
 const BusinessUser = require('../models/BusinessUser');
+const Mailer = require('../services/Mailer');
+
+sinon.stub(Mailer.prototype, 'send').callsFake(()=>{});
 
 sinon.stub(requireAuth, 'LocalLogin')
   .callsFake((req, res, next) => {
@@ -16,6 +19,14 @@ sinon.stub(requireAuth, 'LocalLogin')
     };
     next();
   });
+
+sinon.stub(requireAuth,'JWToken')
+  .callsFake((req,res,next)=>
+  {
+    req.user = {};
+    next();
+  });
+
 sinon.stub(BusinessUser, 'findOne')
   .callsFake((arg) => {
     if (arg.where.username === 'Jack')
@@ -203,6 +214,16 @@ describe('Authentication', () => {
         })
     });
   });
+
+  describe('Post /auth/business/verification',()=>{
+    const route = '/auth/business/verification'
+    it('return 201, when verification email send',(done)=>{
+      request(app)
+      .post(route)
+      .expect(201)
+      .end(done)
+    })
+  })
 
 
 })
