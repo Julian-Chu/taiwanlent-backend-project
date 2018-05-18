@@ -5,13 +5,13 @@ const sequelize = new Sequelize('taiwanlent', 'root', 'dv5606', {
 });
 
 const models = {
-  UserAdmin: sequelize.import('./user_admin'),
-  UserBusiness: sequelize.import('./user_business'),
-  UserGeneral: sequelize.import('./user_general'),
-  UserPersonal: sequelize.import('./user_personal'),
-  Gender: sequelize.import('./gender'),
-  Region: sequelize.import('./region'),
-  Subject: sequelize.import('./subject')
+  UserAdmin: sequelize.import('./UserAdmin'),
+  UserBusiness: sequelize.import('./UserBusiness'),
+  UserGeneral: sequelize.import('./UserGeneral'),
+  UserPersonal: sequelize.import('./UserPersonal'),
+  Gender: sequelize.import('./Gender'),
+  Region: sequelize.import('./Region'),
+  Subject: sequelize.import('./Subject')
 };
 
 Object.keys(models).forEach((modelName) => {
