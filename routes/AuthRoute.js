@@ -70,7 +70,7 @@ module.exports = app => {
     if( Date.now() >= token.expiredAt) return res.status(400).send({error: 'expired token'});
     try{
       let user = await BusinessUser.findById(token.userId, {attributes:['user_business_id','email', 'email_verified']});
-      if(user.email !== token.email) return res.status(400).send({error: 'user data not correct'});
+      if( !user || user.email !== token.email) return res.status(400).send({error: 'user data not correct'});
       // console.log(user);
       await BusinessUser.update({emailVerified: true}, {where:{userId:token.userId}});
       return res.status(204).send('verified');

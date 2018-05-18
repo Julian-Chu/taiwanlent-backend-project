@@ -21,8 +21,15 @@ sinon.stub(BusinessUser, 'findOne')
     if (arg.where.username === 'Jack')
       return {username: 'Jack'};
     else return null;
-    
   });
+
+  sinon.stub(BusinessUser, 'findById')
+    .callsFake(arg=>{
+      if(arg === 0)return null;
+      else return {
+        email: 'not match'
+      }
+    })
 
 sinon.stub(BusinessUser, 'build')
   .callsFake(() => {
@@ -114,9 +121,10 @@ describe('Authentication', () => {
   })
 
   describe('Get auth/business/verification',() => {
+    const route = '/auth/business/verification';
     it('return 404, when vtoken is expired',(done)=>{
       request(app)
-      .get('/auth/business/verification')
+      .get(route)
       .query({token: vtokenEncryption.encrypt(JSON.stringify({expiredAt: Date.now()})) })
       .expect(400)
       .expect(res=>expect(res.body).toMatchObject({error: 'expired token'}))
@@ -124,6 +132,31 @@ describe('Authentication', () => {
         if(err) return done(err);
         done();
       })
+    });
+
+    it("return 404, when user id doesn't exist", (done)=>{
+      request(app)
+      .get(route)
+      .query({token:vtokenEncryption.encrypt(JSON.stringify({userId:0, expiredAt:Date.now()+60*1000 }))})
+      .expect(400)
+      .expect(res=> expect(res.body).toMatchObject({error:'user data not correct'}))
+      .end((err,res)=>{
+        if(err) return done(err);
+        done();
+      })
     })
-  })
+    it("return 404, when user email not match", (done)=>{
+      request(app)
+      .get(route)
+      .query({token:vtokenEncryption.encrypt(JSON.stringify({userId:1, expiredAt:Date.now()+60*1000 }))})
+      .expect(400)
+      .expect(res=> expect(res.body).toMatchObject({error:'user data not correct'}))
+      .end((err,res)=>{
+        if(err) return done(err);
+        done();
+      })
+    })
+  });
+
+  
 })
