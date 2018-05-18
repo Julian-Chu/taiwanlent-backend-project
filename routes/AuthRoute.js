@@ -67,17 +67,16 @@ module.exports = app => {
 
   app.get('/auth/business/verification', async (req,res)=>{
     const token = JSON.parse(vtokenEncryption.decrypt(req.query.token));
-    if( Date.now() >= token.expiredAt) res.status(400).send({error: 'expired token'});
+    if( Date.now() >= token.expiredAt) return res.status(400).send({error: 'expired token'});
     try{
       let user = await BusinessUser.findById(token.userId, {attributes:['user_business_id','email', 'email_verified']});
-      if(user.email !== token.email)  res.status(400).send({error: 'user data not correct'});
+      if(user.email !== token.email) return res.status(400).send({error: 'user data not correct'});
       // console.log(user);
       await BusinessUser.update({emailVerified: true}, {where:{userId:token.userId}});
-      res.status(204).send('verified');
+      return res.status(204).send('verified');
       
     }catch(err){
-      // console.log(err);
-      res.status(400).send(err);
+      return res.status(400).send(err);
     }
   });
 

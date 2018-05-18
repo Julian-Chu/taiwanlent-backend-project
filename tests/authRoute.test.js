@@ -3,6 +3,7 @@
 const utils = require('../utils');
 const request = require('supertest');
 const sinon = require('sinon');
+const vtokenEncryption = require('../services/vtokenEncryption');
 
 const requireAuth = require('../middlewares/requireAuth');
 const BusinessUser = require('../models/BusinessUser');
@@ -109,6 +110,20 @@ describe('Authentication', () => {
           if (err) return done(err);
           done();
         })
+    })
+  })
+
+  describe('Get auth/business/verification',() => {
+    it('return 404, when vtoken is expired',(done)=>{
+      request(app)
+      .get('/auth/business/verification')
+      .query({token: vtokenEncryption.encrypt(JSON.stringify({expiredAt: Date.now()})) })
+      .expect(400)
+      .expect(res=>expect(res.body).toMatchObject({error: 'expired token'}))
+      .end((err,res)=>{
+        if(err) return done(err);
+        done();
+      })
     })
   })
 })
