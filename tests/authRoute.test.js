@@ -19,17 +19,22 @@ sinon.stub(requireAuth, 'LocalLogin')
 sinon.stub(BusinessUser, 'findOne')
   .callsFake((arg) => {
     if (arg.where.username === 'Jack')
-      return {username: 'Jack'};
+      return {
+        username: 'Jack'
+      };
     else return null;
   });
 
-  sinon.stub(BusinessUser, 'findById')
-    .callsFake(arg=>{
-      if(arg === 0)return null;
-      else return {
-        email: 'not match'
-      }
-    })
+sinon.stub(BusinessUser, 'findById')
+  .callsFake(arg => {
+    if (arg === 0) return null;
+    else if (arg === 1) return {
+      email: 'not match'
+    }
+    else return {
+      email: 'match'
+    }
+  })
 
 sinon.stub(BusinessUser, 'build')
   .callsFake(() => {
@@ -40,6 +45,9 @@ sinon.stub(BusinessUser, 'build')
       })
     }
   });
+
+sinon.stub(BusinessUser, 'update')
+  .callsFake(() => {})
 
 
 
@@ -120,43 +128,81 @@ describe('Authentication', () => {
     })
   })
 
-  describe('Get auth/business/verification',() => {
+  describe('Get auth/business/verification', () => {
     const route = '/auth/business/verification';
-    it('return 404, when vtoken is expired',(done)=>{
+    it('return 404, when vtoken is expired', (done) => {
       request(app)
-      .get(route)
-      .query({token: vtokenEncryption.encrypt(JSON.stringify({expiredAt: Date.now()})) })
-      .expect(400)
-      .expect(res=>expect(res.body).toMatchObject({error: 'expired token'}))
-      .end((err,res)=>{
-        if(err) return done(err);
-        done();
-      })
+        .get(route)
+        .query({
+          token: vtokenEncryption.encrypt(JSON.stringify({
+            expiredAt: Date.now()
+          }))
+        })
+        .expect(400)
+        .expect(res => expect(res.body).toMatchObject({
+          error: 'expired token'
+        }))
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        })
     });
 
-    it("return 404, when user id doesn't exist", (done)=>{
+    it("return 404, when user id doesn't exist", (done) => {
       request(app)
-      .get(route)
-      .query({token:vtokenEncryption.encrypt(JSON.stringify({userId:0, expiredAt:Date.now()+60*1000 }))})
-      .expect(400)
-      .expect(res=> expect(res.body).toMatchObject({error:'user data not correct'}))
-      .end((err,res)=>{
-        if(err) return done(err);
-        done();
-      })
-    })
-    it("return 404, when user email not match", (done)=>{
+        .get(route)
+        .query({
+          token: vtokenEncryption.encrypt(JSON.stringify({
+            userId: 0,
+            expiredAt: Date.now() + 60 * 1000
+          }))
+        })
+        .expect(400)
+        .expect(res => expect(res.body).toMatchObject({
+          error: 'user data not correct'
+        }))
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        })
+    });
+
+    it("return 404, when user email not match", (done) => {
       request(app)
-      .get(route)
-      .query({token:vtokenEncryption.encrypt(JSON.stringify({userId:1, expiredAt:Date.now()+60*1000 }))})
-      .expect(400)
-      .expect(res=> expect(res.body).toMatchObject({error:'user data not correct'}))
-      .end((err,res)=>{
-        if(err) return done(err);
-        done();
-      })
-    })
+        .get(route)
+        .query({
+          token: vtokenEncryption.encrypt(JSON.stringify({
+            userId: 1,
+            expiredAt: Date.now() + 60 * 1000
+          }))
+        })
+        .expect(400)
+        .expect(res => expect(res.body).toMatchObject({
+          error: 'user data not correct'
+        }))
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        })
+    });
+
+    it("return 204, when  token isn't expired and user email match", (done) => {
+      request(app)
+        .get(route)
+        .query({
+          token: vtokenEncryption.encrypt(JSON.stringify({
+            userId: 2,
+            email: 'match',
+            expiredAt: Date.now() + 60 * 1000
+          }))
+        })
+        .expect(204)
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        })
+    });
   });
 
-  
+
 })
