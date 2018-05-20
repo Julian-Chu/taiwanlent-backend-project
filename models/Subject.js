@@ -9,12 +9,12 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     subject_value: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(10),
       allowNull: false,
       unique: true
     },
     subject_label: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
       primaryKey: true
     }

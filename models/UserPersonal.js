@@ -9,33 +9,33 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     username: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(25),
       allowNull: false,
       unique: true
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(25),
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(320),
       allowNull: false,
       primaryKey: true
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     phone: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     city: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     occupation: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     living_year_in_germany: {
@@ -43,19 +43,19 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     school: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     work_experience_1: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     work_experience_2: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     work_experience_3: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     german: {
@@ -83,15 +83,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     german_certificate: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     english_certificate: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     chinese_certificate: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     gender_id: {
@@ -119,7 +119,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     photolink: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(2083),
       allowNull: true
     },
     create_at: {

@@ -9,49 +9,49 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     username: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(320),
       allowNull: false,
       primaryKey: true
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     phone: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     company_name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     department: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     company_location: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     address: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     industry: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     product_introduction: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(250),
       allowNull: false
     },
     gender_id: {
