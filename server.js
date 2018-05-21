@@ -13,3 +13,5 @@ require('./routes/authRoute')(app);
 require('./routes/businessUserRoute')(app);
 app.listen(5000);
 console.log("Server started: port 5000");
+
+module.exports.app = app;
