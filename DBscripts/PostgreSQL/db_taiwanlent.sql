@@ -129,3 +129,23 @@ FOREIGN KEY (user_business_id) REFERENCES user_business (user_business_id),
 CONSTRAINT FK_171 FOREIGN KEY (user_personal_id) REFERENCES user_personal (user_personal_id),
 CONSTRAINT UC_user UNIQUE (google_id, fackbook_id, user_business_id, user_personal_id)
 );
+-- ************************************* newsletter
+CREATE TABLE taiwanlent.newsletter
+(
+    email_id SERIAL,
+    email VARCHAR(320) NOT NULL,
+	PRIMARY KEY(email_id),
+    CONSTRAINT uc_newsletter UNIQUE (email)
+);
+
+
+-- ************************************* contactus
+
+CREATE TABLE taiwanlent.contactus_message(
+	message_id SERIAL,
+	username VARCHAR(25) NOT NULL,
+	email VARCHAR(320) NOT NULL,
+	phone VARCHAR(50),
+	message TEXT,
+	PRIMARY KEY(message_id)
+);   
