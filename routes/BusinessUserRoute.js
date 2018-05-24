@@ -1,9 +1,8 @@
 // @ts-check
 'use strict'
-const passport = require('passport');
-const dic = require('../dic');
+const requireAuth = require('../middlewares/requireAuth');
 module.exports = app=>{
-  app.get('/businessuser', passport.authenticate(dic.businessJwtLogin, {session:false}), (req,res)=>{
+  app.get('/api/businessuser', requireAuth.JWToken, (req,res)=>{
     res.send({user: req.user});
   })
 }
