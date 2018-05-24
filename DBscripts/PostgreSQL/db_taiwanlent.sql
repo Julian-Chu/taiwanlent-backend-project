@@ -19,7 +19,7 @@ CREATE TABLE taiwanlent.user_admin
 (
  user_admin_id SERIAL ,
  username   VARCHAR(25) NOT NULL ,
- password   VARCHAR(25) NOT NULL ,
+ password   VARCHAR(60) NOT NULL ,
 
  PRIMARY KEY (user_admin_id)
 );
@@ -59,7 +59,7 @@ CREATE TABLE user_personal
 (
  user_personal_id      SERIAL ,
  username              VARCHAR(25) NOT NULL ,
- password              VARCHAR(25) NOT NULL ,
+ password              VARCHAR(60) NOT NULL ,
  email                 VARCHAR(320) NOT NULL ,
  name                  VARCHAR(50) NOT NULL ,
  phone                 VARCHAR(50) NOT NULL ,
@@ -97,7 +97,7 @@ CREATE TABLE user_business
 (
  user_business_id     SERIAL ,
  username             VARCHAR(25) NOT NULL ,
- password             VARCHAR(25) NOT NULL ,
+ password             VARCHAR(60) NOT NULL ,
  email                VARCHAR(320) NOT NULL ,
  name                 VARCHAR(50) NOT NULL ,
  phone                VARCHAR(50) NOT NULL ,
