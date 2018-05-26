@@ -23,6 +23,11 @@ module.exports = app => {
   //   }
   // });
 
+  app.get("/api/personaluser", (req,res)=>{
+    const user = {} //todo: get data from database
+    res.status(200).send({user});
+  })
+
   app.post("/api/peronsaluser", (req, res) => {
     console.log(req.body);
     const user = PersonalUser.build({
