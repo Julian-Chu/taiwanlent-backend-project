@@ -9,6 +9,7 @@ module.exports = app => {
     
   });
 
+  // 針對選定的人才寄送email
   app.post('/api/candidates/message',()=>{
 
   })
