@@ -4,8 +4,12 @@
   "description": "taiwanlent backend project",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "nodemon --exec babel-node index.js",
     "startSub": "nodemon --exec babel-node ./DBscripts/index.js"
+=======
+    "test": "jest"
+>>>>>>> fc44e6bf6fd682ebda463e5161c1511785ac1490
   },
   "repository": {
     "type": "git",
@@ -18,10 +22,17 @@
   },
   "homepage": "https://github.com/Julian-Chu/taiwanlent-backend-project#readme",
   "devDependencies": {
+<<<<<<< HEAD
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-3": "^6.24.1",
     "nodemon": "^1.17.3"
+=======
+    "jest": "^22.4.3",
+    "nodemon": "^1.17.3",
+    "sinon": "^5.0.7",
+    "supertest": "^3.1.0"
+>>>>>>> fc44e6bf6fd682ebda463e5161c1511785ac1490
   },
   "dependencies": {
     "bcrypt": "^2.0.1",

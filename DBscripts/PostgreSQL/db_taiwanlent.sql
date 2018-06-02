@@ -20,7 +20,7 @@ CREATE TABLE taiwanlent.user_admin
 (
  user_admin_id SERIAL ,
  username   VARCHAR(25) NOT NULL ,
- password   VARCHAR(25) NOT NULL ,
+ password   VARCHAR(60) NOT NULL ,
 
  PRIMARY KEY (user_admin_id)
 );
@@ -60,7 +60,7 @@ CREATE TABLE user_personal
 (
  user_personal_id      SERIAL ,
  username              VARCHAR(25) NOT NULL ,
- password              VARCHAR(25) NOT NULL ,
+ password              VARCHAR(60) NOT NULL ,
  email                 VARCHAR(320) NOT NULL ,
  name                  VARCHAR(50) NOT NULL ,
  phone                 VARCHAR(50) NOT NULL ,
@@ -98,7 +98,7 @@ CREATE TABLE user_business
 (
  user_business_id     SERIAL ,
  username             VARCHAR(25) NOT NULL ,
- password             VARCHAR(25) NOT NULL ,
+ password             VARCHAR(60) NOT NULL ,
  email                VARCHAR(320) NOT NULL ,
  name                 VARCHAR(50) NOT NULL ,
  phone                VARCHAR(50) NOT NULL ,
@@ -130,3 +130,26 @@ FOREIGN KEY (user_business_id) REFERENCES user_business (user_business_id),
 CONSTRAINT FK_171 FOREIGN KEY (user_personal_id) REFERENCES user_personal (user_personal_id),
 CONSTRAINT UC_user UNIQUE (google_id, fackbook_id, user_business_id, user_personal_id)
 );
+<<<<<<< HEAD
+=======
+-- ************************************* newsletter
+CREATE TABLE taiwanlent.newsletter
+(
+    email_id SERIAL,
+    email VARCHAR(320) NOT NULL,
+	PRIMARY KEY(email_id),
+    CONSTRAINT uc_newsletter UNIQUE (email)
+);
+
+
+-- ************************************* contactus
+
+CREATE TABLE taiwanlent.contactus_message(
+	message_id SERIAL,
+	username VARCHAR(25) NOT NULL,
+	email VARCHAR(320) NOT NULL,
+	phone VARCHAR(50),
+	message TEXT,
+	PRIMARY KEY(message_id)
+);   
+>>>>>>> fc44e6bf6fd682ebda463e5161c1511785ac1490
