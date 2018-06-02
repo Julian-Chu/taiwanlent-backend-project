@@ -5,10 +5,10 @@ const sequelize = new Sequelize('taiwanlent', 'root', 'dv5606', {
 });
 
 const models = {
-  UserAdmin: sequelize.import('./UserAdmin'),
-  UserBusiness: sequelize.import('./UserBusiness'),
-  UserGeneral: sequelize.import('./UserGeneral'),
-  UserPersonal: sequelize.import('./UserPersonal'),
+  UserAdmin: sequelize.import('./AdminUser'),
+  UserBusiness: sequelize.import('./BusinessUser'),
+  UserGeneral: sequelize.import('./GeneralUser'),
+  UserPersonal: sequelize.import('./PersonalUser'),
   Gender: sequelize.import('./Gender'),
   Region: sequelize.import('./Region'),
   Subject: sequelize.import('./Subject')

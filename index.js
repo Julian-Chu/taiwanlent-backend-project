@@ -3,8 +3,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-// import passportConfig from './services/passport';
-// import routes from './routes';
+import passportConfig from './services/passport';
+import './routes/authRoute';
+import './routes/businessUserRoute';
 import models from './models';
 
 const app = express();
