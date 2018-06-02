@@ -24,3 +24,4 @@ models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 
 export default models;
+
