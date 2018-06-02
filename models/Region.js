@@ -1,30 +1,24 @@
+/* jshint indent: 2 */
 
-const sequelize = require('../services/sequelize').sequelize;
-const Sequelize = require('sequelize');
-
-const Region = sequelize.define('region',{
-  regionId: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    field: 'region_id'
-  },
-  value:{
-    type: Sequelize.STRING(10),
-    field:'region_value'
-  },
-  label:{
-    type: Sequelize.STRING(50),
-    field: 'region_label'
-  }
-},{
-  schema: 'taiwanlent',
-  freezeTableName: true,
-  timestamps: false
-} );
-
-// Region.findAll().then(regions=>{
-//   console.log(regions);
-// })
-
-module.exports = Region;
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('region', {
+    region_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    region_value: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      unique: true
+    },
+    region_label: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      primaryKey: true
+    }
+  }, {
+    tableName: 'region'
+  });
+};

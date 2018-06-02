@@ -23,6 +23,11 @@ module.exports = app => {
   //   }
   // });
 
+  app.get("/api/personaluser", (req,res)=>{
+    const user = {} //todo: get data from database
+    res.status(200).send({user});
+  })
+  // 註冊用戶資料
   app.post("/api/peronsaluser", (req, res) => {
     console.log(req.body);
     const user = PersonalUser.build({
@@ -56,5 +61,12 @@ module.exports = app => {
     // user.save().then(()=>{
     //   res.status(204);
     // })
-  })
+  });
+
+  //用戶修改資料
+  app.patch("/api/personaluser",(req,res)=>{
+
+  });
+
+
 }

@@ -1,15 +1,16 @@
--- ****************** PostgreSQL ******************;
--- ***************************************************;
+-- -- ****************** PostgreSQL ******************;
+-- -- ***************************************************;
 
-DROP TABLE IF EXISTS user_general;
-DROP TABLE IF EXISTS user_personal;
-DROP TABLE IF EXISTS user_business;
-DROP TABLE IF EXISTS user_admin;
-DROP TABLE IF EXISTS gender;
-DROP TABLE IF EXISTS subject;
-DROP TABLE IF EXISTS region;
-DROP SCHEMA IF EXISTS taiwanlent CASCADE;
-CREATE SCHEMA taiwanlent;
+DROP TABLE IF EXISTS "user_general";
+DROP TABLE IF EXISTS "user_personal";
+DROP TABLE IF EXISTS "user_business";
+DROP TABLE IF EXISTS "user_admin";
+DROP TABLE IF EXISTS "gender";
+DROP TABLE IF EXISTS "subject";
+DROP TABLE IF EXISTS "region";
+DROP SCHEMA IF EXISTS "taiwanlent" CASCADE;
+
+CREATE SCHEMA "taiwanlent";
 
 SET search_path = taiwanlent;
 
@@ -129,6 +130,8 @@ FOREIGN KEY (user_business_id) REFERENCES user_business (user_business_id),
 CONSTRAINT FK_171 FOREIGN KEY (user_personal_id) REFERENCES user_personal (user_personal_id),
 CONSTRAINT UC_user UNIQUE (google_id, fackbook_id, user_business_id, user_personal_id)
 );
+<<<<<<< HEAD
+=======
 -- ************************************* newsletter
 CREATE TABLE taiwanlent.newsletter
 (
@@ -149,3 +152,4 @@ CREATE TABLE taiwanlent.contactus_message(
 	message TEXT,
 	PRIMARY KEY(message_id)
 );   
+>>>>>>> fc44e6bf6fd682ebda463e5161c1511785ac1490
