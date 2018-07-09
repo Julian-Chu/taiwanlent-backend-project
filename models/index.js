@@ -1,8 +1,10 @@
 import Sequelize from 'sequelize';
+import Keys from '../config/key';
 
-const sequelize = new Sequelize('taiwanlent', 'root', 'dv5606', {
-  dialect: 'mysql'
-});
+// const sequelize = new Sequelize('taiwanlent', 'root', '1234', {
+//   dialect: 'mysql'
+// });
+const sequelize = new Sequelize(Keys.connectionString);
 
 const models = {
   UserAdmin: sequelize.import('./AdminUser'),
@@ -24,4 +26,3 @@ models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 
 export default models;
-
