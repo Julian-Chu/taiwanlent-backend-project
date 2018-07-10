@@ -1,9 +1,6 @@
 import Sequelize from 'sequelize';
 import Keys from '../config/key';
 
-// const sequelize = new Sequelize('taiwanlent', 'root', '1234', {
-//   dialect: 'mysql'
-// });
 const sequelize = new Sequelize(Keys.connectionString);
 
 const models = {
