@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
     "startSub": "nodemon --exec babel-node ./DBscripts/index.js",
-    "test": "jest"
+    "test": "jest",
+    "buildDB": "docker build --no-cache --tag=\"taiwanlent_postgresql\" ./DBscripts/PostgreSQL/",
+    "runDB": "docker rm -f postgresdb && docker run --name postgresdb  -e POSTGRES_PASSWORD=1234 -h postgres -p 5432:5432 -d taiwanlent_postgresql"
   },
   "repository": {
     "type": "git",
