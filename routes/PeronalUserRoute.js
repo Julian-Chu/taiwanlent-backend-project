@@ -1,6 +1,7 @@
 // @ts-check
 'use strict'
-const PersonalUser = require('../models/PersonalUser');
+const models = require('../models/index');
+const PersonalUser = models.UserPersonal;
 
 module.exports = app => {
   // app.get("/user", (req, res) => {
@@ -23,9 +24,11 @@ module.exports = app => {
   //   }
   // });
 
-  app.get("/api/personaluser", (req,res)=>{
+  app.get("/api/personaluser", (req, res) => {
     const user = {} //todo: get data from database
-    res.status(200).send({user});
+    res.status(200).send({
+      user
+    });
   })
   // 註冊用戶資料
   app.post("/api/peronsaluser", (req, res) => {
@@ -64,7 +67,7 @@ module.exports = app => {
   });
 
   //用戶修改資料
-  app.patch("/api/personaluser",(req,res)=>{
+  app.patch("/api/personaluser", (req, res) => {
 
   });
 

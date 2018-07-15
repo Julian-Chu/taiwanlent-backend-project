@@ -6,10 +6,11 @@ const sinon = require('sinon');
 const vtokenEncryption = require('../services/vtokenEncryption');
 
 const requireAuth = require('../middlewares/requireAuth');
-const BusinessUser = require('../models/BusinessUser');
+const models = require('../models/index');
+const BusinessUser = models.UserBusiness;
 const Mailer = require('../services/Mailer');
 
-sinon.stub(Mailer.prototype, 'send').callsFake(()=>{});
+sinon.stub(Mailer.prototype, 'send').callsFake(() => {});
 
 sinon.stub(requireAuth, 'LocalLogin')
   .callsFake((req, res, next) => {
@@ -20,9 +21,8 @@ sinon.stub(requireAuth, 'LocalLogin')
     next();
   });
 
-sinon.stub(requireAuth,'JWToken')
-  .callsFake((req,res,next)=>
-  {
+sinon.stub(requireAuth, 'JWToken')
+  .callsFake((req, res, next) => {
     req.user = {};
     next();
   });
@@ -61,8 +61,7 @@ sinon.stub(BusinessUser, 'update')
   .callsFake(() => {})
 
 
-
-var app = require('../server').app;
+var app = require('../index').app;
 describe('Authentication', () => {
   describe('Get /auth/logout', () => {
     it('redirect to /logout', (done) => {
@@ -215,13 +214,13 @@ describe('Authentication', () => {
     });
   });
 
-  describe('Post /auth/business/verification',()=>{
+  describe('Post /auth/business/verification', () => {
     const route = '/auth/business/verification'
-    it('return 201, when verification email send',(done)=>{
+    it('return 201, when verification email send', (done) => {
       request(app)
-      .post(route)
-      .expect(201)
-      .end(done)
+        .post(route)
+        .expect(201)
+        .end(done)
     })
   })
 

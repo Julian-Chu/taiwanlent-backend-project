@@ -1,6 +1,7 @@
 // @ts-check
 'use strict';
-const BusinessUser = require('../models/BusinessUser');
+const models = require('../models/index');
+const BusinessUser = models.UserBusiness;
 const Mailer = require('../services/Mailer');
 const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
 const vtokenEncryption = require('../services/vtokenEncryption');
@@ -28,7 +29,7 @@ module.exports = app => {
     res.redirect('/logout')
   });
 
-  app.post("/auth/business/signin", requireAuth.LocalLogin , (req, res) => {
+  app.post("/auth/business/signin", requireAuth.LocalLogin, (req, res) => {
     res.send({
       token: createToken(req.user)
     });
@@ -54,56 +55,69 @@ module.exports = app => {
         error: 'username already exists'
       });
     }
-    
+
     const hash = await hashPassword(password);
 
     const newUser = await BusinessUser.build({
       username,
       password: hash,
-      emailVerified:false
+      emailVerified: false
     }).save();
-      return res.status(201).send({token:createToken(newUser)});
+    return res.status(201).send({
+      token: createToken(newUser)
+    });
   });
 
-  app.get('/auth/business/verification', async (req,res)=>{
+  app.get('/auth/business/verification', async (req, res) => {
     const token = JSON.parse(vtokenEncryption.decrypt(req.query.token));
-    if( Date.now() >= token.expiredAt) return res.status(400).send({error: 'expired token'});
-    try{
-      let user = await BusinessUser.findById(token.userId, {attributes:['user_business_id','email', 'email_verified']});
-      if( !user || user.email !== token.email) return res.status(400).send({error: 'user data not correct'});
+    if (Date.now() >= token.expiredAt) return res.status(400).send({
+      error: 'expired token'
+    });
+    try {
+      let user = await BusinessUser.findById(token.userId, {
+        attributes: ['user_business_id', 'email', 'email_verified']
+      });
+      if (!user || user.email !== token.email) return res.status(400).send({
+        error: 'user data not correct'
+      });
       // console.log(user);
-      await BusinessUser.update({emailVerified: true}, {where:{userId:token.userId}});
+      await BusinessUser.update({
+        emailVerified: true
+      }, {
+        where: {
+          userId: token.userId
+        }
+      });
       return res.status(204).send('verified');
-      
-    }catch(err){
+
+    } catch (err) {
       return res.status(400).send(err);
     }
   });
 
   app.post('/auth/business/verification',
-            requireAuth.JWToken,  
-            async (req, res)=>{
-              // console.log('User:',req.user);
-              let token = {
-                  email: req.user.email,
-                  expiredAt: Date.now() + 3*24*60*60*1000,
-                  userId: req.user.userId
-              }
-              let user = {
-                 name: req.user.name,
-                 verifyToken: vtokenEncryption.encrypt(JSON.stringify(token)),
-                 subject: 'Verify your account! Taiwanlent',
-                 email: req.user.email
-              };
-              const mailer = new Mailer(user, verifyTemplate(user));
-              // console.log(user);
-              try{
-                const response = await mailer.send();
-                res.status(201).send(response);                
-              }catch(err){
-                // console.log('error to send email verifier');
-                res.status(401).send(err);
-              }
-  })
+    requireAuth.JWToken,
+    async (req, res) => {
+      // console.log('User:',req.user);
+      let token = {
+        email: req.user.email,
+        expiredAt: Date.now() + 3 * 24 * 60 * 60 * 1000,
+        userId: req.user.userId
+      }
+      let user = {
+        name: req.user.name,
+        verifyToken: vtokenEncryption.encrypt(JSON.stringify(token)),
+        subject: 'Verify your account! Taiwanlent',
+        email: req.user.email
+      };
+      const mailer = new Mailer(user, verifyTemplate(user));
+      // console.log(user);
+      try {
+        const response = await mailer.send();
+        res.status(201).send(response);
+      } catch (err) {
+        // console.log('error to send email verifier');
+        res.status(401).send(err);
+      }
+    })
 }
-
