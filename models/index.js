@@ -1,5 +1,6 @@
-import Sequelize from 'sequelize';
-import Keys from '../config/key';
+// @ts-check
+const Sequelize = require('sequelize');
+const Keys = require('../config/key');
 
 const sequelize = new Sequelize(Keys.connectionString);
 
@@ -22,4 +23,4 @@ Object.keys(models).forEach((modelName) => {
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 
-export default models;
+module.exports = models;
