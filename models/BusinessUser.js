@@ -1,12 +1,13 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('user_business', {
-    user_business_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
+      field: 'user_business_id'
     },
     username: {
       type: DataTypes.STRING(50),
@@ -70,11 +71,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    email_verified: {
+    emailVerified: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+
+      field: 'email_verified'
     }
   }, {
-    tableName: 'user_business'
+    tableName: 'user_business',
+    schema: "taiwanlent"
   });
 };

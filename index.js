@@ -11,5 +11,10 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.listen(5000);
+
+// Routes
+require('./routes/authRoute')(app);
+require('./routes/businessUserRoute')(app);
+console.log("Server started: port 5000");
 module.exports.app = app;
+app.listen(5000);
