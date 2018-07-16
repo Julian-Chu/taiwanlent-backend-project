@@ -3,11 +3,18 @@ const dic = require('../dic');
 
 
 const LocalLogin = passport.authenticate(dic.businessLocalLogin, {
-    session: false
-  })
-const JWToken = passport.authenticate(dic.businessJwtLogin, {session:false})
+  session: false
+})
+const JWToken = passport.authenticate(dic.businessJwtLogin, {
+  session: false
+})
+
+const GoogleLogin = passport.authenticate(dic.businessGoogleLogin, {
+  scope: ['profile', 'email']
+})
 
 module.exports = {
   LocalLogin,
-  JWToken
+  JWToken,
+  GoogleLogin
 }

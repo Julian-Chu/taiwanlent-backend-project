@@ -10,20 +10,18 @@ const hashPassword = require('../utils').hashPassword;
 const createToken = require('../utils').createToken;
 
 module.exports = app => {
-  // app.get(
-  //   "/auth/google",
-  //   passport.authenticate('google', {
-  //     scope: ['profile', 'email']
-  //   })
-  // );
+  app.get(
+    "/auth/google",
+    requireAuth.GoogleLogin
+  );
 
-  // app.get(
-  //   "/auth/google/callback",
-  //   passport.authenticate('google'),
-  //   (req, res) => {
-  //     res.direct('/user')
-  //   }
-  // );
+  app.get(
+    "/auth/google/callback",
+    requireAuth.GoogleLogin,
+    (req, res) => {
+      res.direct('/user')
+    }
+  );
 
   app.get("/auth/logout", (req, res) => {
     res.redirect('/logout')

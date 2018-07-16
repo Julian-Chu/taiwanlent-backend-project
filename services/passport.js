@@ -9,6 +9,7 @@ const GeneralUser = models.UserGeneral;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
+// @ts-ignore
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const dic = require('../dic');
 const bcrypt = require('bcrypt');
@@ -56,7 +57,7 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
   }
 })
 
-const BusinessUserGoogleLogin = new GoogleStrategy({
+const businessUserGoogleLogin = new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback',
@@ -86,3 +87,4 @@ const BusinessUserGoogleLogin = new GoogleStrategy({
 )
 passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
+passport.use(dic.businessGoogleLogin, businessUserGoogleLogin);
