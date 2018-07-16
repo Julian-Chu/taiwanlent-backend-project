@@ -88,32 +88,32 @@ const businessUserGoogleLogin = new GoogleStrategy({
 )
 passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
-// passport.use(dic.businessUserGoogleLogin, businessUserGoogleLogin);
-passport.use(new GoogleStrategy({
-    clientID: keys.googleClientID,
-    clientSecret: keys.googleClientSecret,
-    callbackURL: '/auth/google/callback',
-    proxy: true
-  },
-  async (accessToken, refreshtoken, profile, done) => {
-    const existingUser = await GeneralUser.findOne({
-      where: {
-        google_id: profile.id
-      },
-      attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
-    })
+passport.use(businessUserGoogleLogin);
+// passport.use(new GoogleStrategy({
+//     clientID: keys.googleClientID,
+//     clientSecret: keys.googleClientSecret,
+//     callbackURL: '/auth/google/callback',
+//     proxy: true
+//   },
+//   async (accessToken, refreshtoken, profile, done) => {
+//     const existingUser = await GeneralUser.findOne({
+//       where: {
+//         google_id: profile.id
+//       },
+//       attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
+//     })
 
-    if (existingUser) {
-      done(null, existingUser);
-    } else {
-      // BusinessUser.create({})
-      // GeneralUser.create({
-      //   google_id: profile.id
-      // }).then(user => {
-      //   console.log(user.get({
-      //     plain: true
-      //   }));
-      // })
-    }
-  }
-))
+//     if (existingUser) {
+//       done(null, existingUser);
+//     } else {
+//       // BusinessUser.create({})
+//       // GeneralUser.create({
+//       //   google_id: profile.id
+//       // }).then(user => {
+//       //   console.log(user.get({
+//       //     plain: true
+//       //   }));
+//       // })
+//     }
+//   }
+// ))

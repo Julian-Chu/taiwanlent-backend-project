@@ -9,9 +9,9 @@ const JWToken = passport.authenticate(dic.businessJwtLogin, {
   session: false
 })
 
-const GoogleLogin = passport.authenticate(dic.businessGoogleLogin, {
+const GoogleLogin = passport.authenticate(dic.businessUserGoogleLogin, {
   scope: ['profile', 'email'],
-  failureRedirect: '/',
+  // failureRedirect: '/',
   session: false
 })
 
