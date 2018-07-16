@@ -10,7 +10,8 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
 // @ts-ignore
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth20');
 const dic = require('../dic');
 const bcrypt = require('bcrypt');
 const utils = require('../utils');
@@ -87,4 +88,4 @@ const businessUserGoogleLogin = new GoogleStrategy({
 )
 passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
-passport.use(dic.businessGoogleLogin, businessUserGoogleLogin);
+passport.use(dic.businessUserGoogleLogin, businessUserGoogleLogin);

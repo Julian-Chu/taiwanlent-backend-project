@@ -10,7 +10,9 @@ const JWToken = passport.authenticate(dic.businessJwtLogin, {
 })
 
 const GoogleLogin = passport.authenticate(dic.businessGoogleLogin, {
-  scope: ['profile', 'email']
+  scope: ['profile', 'email'],
+  failureRedirect: '/',
+  session: false
 })
 
 module.exports = {

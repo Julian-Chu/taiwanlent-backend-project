@@ -1,9 +1,9 @@
 const businessLocalLogin = 'businessLocalLogin';
 const businessJwtLogin = 'businessJwtLogin';
-const businessUserGoogleLogin = 'businessGoogleLogin';
+const businessUserGoogleLogin = 'google';
 
 module.exports = {
   businessJwtLogin,
   businessLocalLogin,
-  businessGoogleLogin
+  businessUserGoogleLogin
 }
