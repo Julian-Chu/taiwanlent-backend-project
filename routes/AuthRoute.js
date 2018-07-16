@@ -8,12 +8,16 @@ const vtokenEncryption = require('../services/vtokenEncryption');
 const requireAuth = require('../middlewares/requireAuth');
 const hashPassword = require('../utils').hashPassword;
 const createToken = require('../utils').createToken;
+const passport = require('passport');
 
 module.exports = app => {
   app.get(
     "/auth/google",
-    requireAuth.GoogleLogin
-  );
+    passport.authenticate('google', {
+      session: false,
+      scope: ['profile', 'email'],
+      failureRedirect: '/'
+    }));
 
   app.get(
     "/auth/google/callback",
