@@ -4,6 +4,7 @@ const passport = require('passport');
 const keys = require('../config/key');
 const models = require('../models/index');
 const BusinessUser = models.UserBusiness;
+const PersonalUser = models.UserPersonal;
 const GeneralUser = models.UserGeneral;
 
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -72,21 +73,26 @@ const businessUserGoogleLogin = new GoogleStrategy({
         where: {
           google_id: profile.id
         },
-        attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
+        // attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
+        attributes: ['user_id', 'google_id']
       })
       if (existingUser) {
         done(null, existingUser);
       } else {
-        BusinessUser.create({})
-        GeneralUser.create({
-          google_id: profile.id
-        }).then(user => {
-          console.log(user.get({
-            plain: true
-          }));
-        })
+        console.log('user not exist, create new user');
+        const businessUser = await BusinessUser.create({});
+        console.log('businessUser:', businessUser);
+        // PersonalUser.create({});
+        // GeneralUser.create({
+        //   google_id: profile.id
+        // }).then(user => {
+        //   console.log(user.get({
+        //     plain: true
+        //   }));
+        // })
       }
     } catch (err) {
+      console.log(Date.now());
       console.log(err);
       // redirect to error page?
     }
