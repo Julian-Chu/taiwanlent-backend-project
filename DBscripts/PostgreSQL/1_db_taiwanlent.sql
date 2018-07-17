@@ -97,7 +97,7 @@ CONSTRAINT UC_user_personal UNIQUE (username, email)
 CREATE TABLE user_business
 (
  user_business_id     SERIAL ,
- username             VARCHAR(25) NOT NULL DEFAULT '' ,
+ username             VARCHAR(25) ,
  password             VARCHAR(60) NOT NULL  DEFAULT '' ,
  email                VARCHAR(320) NOT NULL DEFAULT '',
  name                 VARCHAR(50) NOT NULL DEFAULT '',

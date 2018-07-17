@@ -11,25 +11,29 @@ module.exports = function (sequelize, DataTypes) {
     },
     username: {
       type: DataTypes.STRING(50),
-      allowNull: false,
+      allowNull: true,
       unique: true
     },
     password: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     email: {
       type: DataTypes.STRING(320),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      defaultValue: ''
     },
     name: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     phone: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     company_name: {
       type: DataTypes.STRING(50),
@@ -41,7 +45,8 @@ module.exports = function (sequelize, DataTypes) {
     },
     company_location: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     address: {
       type: DataTypes.STRING(50),
@@ -49,11 +54,13 @@ module.exports = function (sequelize, DataTypes) {
     },
     industry: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     product_introduction: {
       type: DataTypes.STRING(250),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     gender_id: {
       type: DataTypes.INTEGER,
@@ -61,21 +68,24 @@ module.exports = function (sequelize, DataTypes) {
       references: {
         model: 'gender',
         key: 'gender_id'
-      }
+      },
+      defaultValue: 1
     },
-    create_at: {
+    createdAt: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      field: 'create_at',
     },
-    change_at: {
+    updatedAt: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      field: 'change_at',
     },
     emailVerified: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-
-      field: 'email_verified'
+      field: 'email_verified',
+      defaultValue: false
     }
   }, {
     tableName: 'user_business',
