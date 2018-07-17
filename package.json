@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node index.js",
     "startSub": "nodemon --exec babel-node ./DBscripts/index.js",
     "test": "jest",
-    "startNewDB": "docker build --no-cache --tag=\"taiwanlent_postgresql\" ./DBscripts/PostgreSQL/ && (docker rm -f postgresdb  ||  echo 'no container named postgresdb') && docker run --name postgresdb  -e POSTGRES_PASSWORD=1234 -h postgres -p 5432:5432 -d taiwanlent_postgresql"
+    "startNewDB": "docker build --no-cache --tag=\"taiwanlent_postgresql\" ./DBscripts/PostgreSQL/ && (docker rm -f postgresdb  ||  echo 'no container named postgresdb') && docker run --name postgresdb  -e POSTGRES_PASSWORD=1234 -h postgres -p 5432:5432 -d taiwanlent_postgresql && docker logs postgresdb"
   },
   "repository": {
     "type": "git",
