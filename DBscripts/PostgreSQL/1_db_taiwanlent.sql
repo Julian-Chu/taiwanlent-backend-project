@@ -80,7 +80,7 @@ CREATE TABLE user_personal
  german_certificate    VARCHAR(50) ,
  english_certificate   VARCHAR(50) ,
  chinese_certificate   VARCHAR(50) ,
- gender_id             INT NOT NULL DEFAULT 1; 
+ gender_id             INT NOT NULL DEFAULT 1, 
  region_id             INT NOT NULL DEFAULT 1,
  subject_id            INT NOT NULL DEFAULT 1,
  photolink             VARCHAR(2083) ,
@@ -120,8 +120,8 @@ CONSTRAINT UC_user_business UNIQUE (username, email)
 CREATE TABLE user_general
 (
  user_id          SERIAL ,
- google_id        INT ,
- fackbook_id      INT ,
+ google_id        VARCHAR(30) ,
+ fackbook_id      VARCHAR(30) ,
  user_business_id INT NOT NULL ,
  user_personal_id INT NOT NULL ,
 
