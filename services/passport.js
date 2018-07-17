@@ -65,24 +65,30 @@ const businessUserGoogleLogin = new GoogleStrategy({
     proxy: true
   },
   async (accessToken, refreshtoken, profile, done) => {
-    const existingUser = await GeneralUser.findOne({
-      where: {
-        google_id: profile.id
-      },
-      attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
-    })
+    console.log("in google stragety");
+    try {
 
-    if (existingUser) {
-      done(null, existingUser);
-    } else {
-      // BusinessUser.create({})
-      // GeneralUser.create({
-      //   google_id: profile.id
-      // }).then(user => {
-      //   console.log(user.get({
-      //     plain: true
-      //   }));
-      // })
+      const existingUser = await GeneralUser.findOne({
+        where: {
+          google_id: profile.id
+        },
+        attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
+      })
+      if (existingUser) {
+        done(null, existingUser);
+      } else {
+        BusinessUser.create({})
+        GeneralUser.create({
+          google_id: profile.id
+        }).then(user => {
+          console.log(user.get({
+            plain: true
+          }));
+        })
+      }
+    } catch (err) {
+      console.log(err);
+      // redirect to error page?
     }
   }
 )

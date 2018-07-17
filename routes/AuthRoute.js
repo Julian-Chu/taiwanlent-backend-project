@@ -19,6 +19,7 @@ module.exports = app => {
     "/auth/google/callback",
     requireAuth.GoogleLogin,
     (req, res) => {
+      console.log("google callback");
       res.direct('/user')
     }
   );
