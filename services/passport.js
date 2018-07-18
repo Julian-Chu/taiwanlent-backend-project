@@ -5,7 +5,7 @@ const keys = require('../config/key');
 const models = require('../models/index');
 const BusinessUser = models.UserBusiness;
 const PersonalUser = models.UserPersonal;
-const GeneralUser = models.UserGeneral;
+// const GeneralUser = models.UserGeneral;
 
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -69,7 +69,7 @@ const businessUserGoogleLogin = new GoogleStrategy({
     console.log("in google stragety");
     try {
 
-      const existingUser = await GeneralUser.findOne({
+      const existingUser = await BusinessUser.findOne({
         where: {
           google_id: profile.id
         },
