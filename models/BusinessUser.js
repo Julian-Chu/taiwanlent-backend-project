@@ -9,6 +9,16 @@ module.exports = function (sequelize, DataTypes) {
       autoIncrement: true,
       field: 'user_business_id'
     },
+    google_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      unique: true
+    },
+    fackbook_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      primaryKey: true
+    },
     username: {
       type: DataTypes.STRING(50),
       allowNull: true,
