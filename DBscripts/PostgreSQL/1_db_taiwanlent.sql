@@ -59,6 +59,8 @@ CONSTRAINT UC_region UNIQUE (region_value, region_label)
 CREATE TABLE user_personal
 (
  user_personal_id      SERIAL ,
+ google_id        VARCHAR(30) , 
+ fackbook_id      VARCHAR(30) ,
  username              VARCHAR(25) NOT NULL DEFAULT '',
  password              VARCHAR(60) NOT NULL DEFAULT '',
  email                 VARCHAR(320) NOT NULL DEFAULT '',
@@ -91,12 +93,14 @@ PRIMARY KEY (user_personal_id),
 FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
 FOREIGN KEY (region_id) REFERENCES region (region_id),
 FOREIGN KEY (subject_id) REFERENCES subject (subject_id),
-CONSTRAINT UC_user_personal UNIQUE (username, email)
+CONSTRAINT UC_user_personal UNIQUE (username, email, google_id, fackbook_id)
 );
 -- ************************************** user_business
 CREATE TABLE user_business
 (
  user_business_id     SERIAL ,
+ google_id        VARCHAR(30) ,
+ fackbook_id      VARCHAR(30) ,
  username             VARCHAR(25) ,
  password             VARCHAR(60) NOT NULL  DEFAULT '' ,
  email                VARCHAR(320) NOT NULL DEFAULT '',
@@ -114,19 +118,19 @@ CREATE TABLE user_business
  email_verified boolean NOT NULL DEFAULT false,
 PRIMARY KEY (user_business_id),
 FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
-CONSTRAINT UC_user_business UNIQUE (username, email)
+CONSTRAINT UC_user_business UNIQUE (username, email, google_id, fackbook_id)
 );
 -- ************************************** user
-CREATE TABLE user_general
-(
- user_id          SERIAL ,
- google_id        VARCHAR(30) ,
- fackbook_id      VARCHAR(30) ,
- user_business_id INT NOT NULL ,
- user_personal_id INT NOT NULL ,
+-- CREATE TABLE user_general
+-- (
+--  user_id          SERIAL ,
+--  google_id        VARCHAR(30) ,
+--  fackbook_id      VARCHAR(30) ,
+--  user_business_id INT NOT NULL ,
+--  user_personal_id INT NOT NULL ,
 
-PRIMARY KEY (user_id),
-FOREIGN KEY (user_business_id) REFERENCES user_business (user_business_id),
-CONSTRAINT FK_171 FOREIGN KEY (user_personal_id) REFERENCES user_personal (user_personal_id),
-CONSTRAINT UC_user UNIQUE (google_id, fackbook_id, user_business_id, user_personal_id)
-);
+-- PRIMARY KEY (user_id),
+-- FOREIGN KEY (user_business_id) REFERENCES user_business (user_business_id),
+-- CONSTRAINT FK_171 FOREIGN KEY (user_personal_id) REFERENCES user_personal (user_personal_id),
+-- CONSTRAINT UC_user UNIQUE (google_id, fackbook_id, user_business_id, user_personal_id)
+-- );
