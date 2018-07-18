@@ -2,12 +2,12 @@
 
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('user_business', {
-    userId: {
+    user_business_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-      field: 'user_business_id'
+      // field: 'user_business_id'
     },
     google_id: {
       type: DataTypes.INTEGER,

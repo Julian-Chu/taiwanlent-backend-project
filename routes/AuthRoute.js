@@ -20,7 +20,7 @@ module.exports = app => {
     requireAuth.GoogleLogin,
     (req, res) => {
       console.log("google callback");
-      res.direct('/user')
+      res.redirect('/user');
     }
   );
 

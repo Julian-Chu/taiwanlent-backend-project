@@ -74,22 +74,17 @@ const businessUserGoogleLogin = new GoogleStrategy({
           google_id: profile.id
         },
         // attributes: ['user_id', 'google_id', 'user_business_id', 'user_personal_id']
-        attributes: ['user_id', 'google_id']
+        attributes: ['user_business_id', 'google_id']
       })
       if (existingUser) {
         done(null, existingUser);
       } else {
         console.log('user not exist, create new user');
-        const businessUser = await BusinessUser.create({});
+        const businessUser = await BusinessUser.create({
+          google_id: profile.id
+        });
         console.log('businessUser:', businessUser);
-        // PersonalUser.create({});
-        // GeneralUser.create({
-        //   google_id: profile.id
-        // }).then(user => {
-        //   console.log(user.get({
-        //     plain: true
-        //   }));
-        // })
+        done(null, businessUser);
       }
     } catch (err) {
       console.log(Date.now());
@@ -100,7 +95,7 @@ const businessUserGoogleLogin = new GoogleStrategy({
 )
 passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
-passport.use(businessUserGoogleLogin);
+passport.use(dic.businessUserGoogleLogin, businessUserGoogleLogin);
 // passport.use(new GoogleStrategy({
 //     clientID: keys.googleClientID,
 //     clientSecret: keys.googleClientSecret,
