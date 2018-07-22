@@ -21,7 +21,7 @@ module.exports = app => {
     (req, res) => {
       console.log("google callback");
       let token = createToken(req.user);
-      res.redirect('/talents?token=' + token);
+      res.redirect('/login?token=' + token);
     }
   );
 
