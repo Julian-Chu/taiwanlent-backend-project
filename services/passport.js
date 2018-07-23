@@ -51,11 +51,17 @@ const jwtOptions = {
 const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     console.log(payload);
+    let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
     const user = await BusinessUser.findById(payload.sub, {
       attributes: {
-        exclude: ['user_business_id', 'google_id', 'facebook_id']
+        exclude: excludedFields
       }
     });
+
+    excludedFields.forEach(field => {
+      delete user[field];
+    })
+
     if (!user) done(null, false);
     else done(null, user);
 

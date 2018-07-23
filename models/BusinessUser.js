@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       unique: true
     },
-    fackbook_id: {
+    facebook_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       primaryKey: true
