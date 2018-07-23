@@ -40,7 +40,7 @@ const businessUserLocalLogin = new LocalStrategy({
 });
 
 const jwtOptions = {
-  // jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  // jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Bearer <token>
   secretOrKey: keys.jwtSecretKey,
   jsonWebTokenOptions: {
@@ -50,6 +50,7 @@ const jwtOptions = {
 
 const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
+    console.log(payload);
     const user = await BusinessUser.findById(payload.sub);
     if (!user) done(null, false);
     else done(null, user);

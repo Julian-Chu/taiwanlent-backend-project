@@ -7,7 +7,7 @@ const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTem
 const vtokenEncryption = require('../services/vtokenEncryption');
 const requireAuth = require('../middlewares/requireAuth');
 const hashPassword = require('../utils').hashPassword;
-const createToken = require('../utils').createToken;
+const createTokenForBusinessUser = require('../utils').createTokenForBusinessUser;
 
 module.exports = app => {
   app.get(
@@ -19,8 +19,8 @@ module.exports = app => {
     "/auth/google/callback",
     requireAuth.GoogleLogin,
     (req, res) => {
-      console.log("google callback");
-      let token = createToken(req.user);
+      console.log("google callback:", req.user);
+      let token = createTokenForBusinessUser(req.user);
       res.redirect('/login?token=' + token);
     }
   );
@@ -31,7 +31,7 @@ module.exports = app => {
 
   app.post("/auth/business/signin", requireAuth.LocalLogin, (req, res) => {
     res.send({
-      token: createToken(req.user)
+      token: createTokenForBusinessUser(req.user)
     });
   });
 
@@ -64,7 +64,7 @@ module.exports = app => {
       emailVerified: false
     }).save();
     return res.status(201).send({
-      token: createToken(newUser)
+      token: createTokenForBusinessUser(newUser)
     });
   });
 
