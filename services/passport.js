@@ -50,7 +50,11 @@ const jwtOptions = {
 
 const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    console.log(payload);
+    console.log(payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
+
+    //check role is business_user
+    if (payload.role !== dic.roleBusiness) done(null, false);
+
     let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
     const user = await BusinessUser.findById(payload.sub, {
       attributes: {

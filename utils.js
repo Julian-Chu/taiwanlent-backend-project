@@ -3,6 +3,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const keys = require('./config/key');
+const dic = require('./dic');
 async function hashPassword(plainTextPassword) {
   const saltRounds = 10;
   const hashPassword = await new Promise((resolve, reject) => {
@@ -22,7 +23,8 @@ function createTokenForBusinessUser(user) {
   return jwt.encode({
     sub: user.user_business_id,
     iat: timestamp,
-    verified: user.emailVerified || false
+    verified: user.emailVerified || false,
+    role: dic.roleBusiness
   }, keys.jwtSecretKey)
 };
 
