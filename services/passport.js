@@ -108,6 +108,45 @@ const businessUserGoogleLogin = new GoogleStrategy({
     }
   }
 )
+
+const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
+  try {
+    console.log(payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
+
+    //check role is business_user
+    if (payload.role !== dic.roleBusiness || payload.role !== dic.rolePersonal) done(null, false);
+    let user;
+    if (payload.role === dic.roleBusiness) {
+
+      let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
+      user = await BusinessUser.findById(payload.sub, {
+        attributes: {
+          exclude: excludedFields
+        }
+      });
+      excludedFields.forEach(field => {
+        delete user[field];
+      })
+    } else if (payload.role === dic.rolePersonal) {
+      let excludedFields = ['user_personal_id', 'google_id', 'facebook_id'];
+      user = await PersonalUser.findById(payload.sub, {
+        attributes: {
+          exclude: excludedFields
+        }
+      });
+      excludedFields.forEach(field => {
+        delete user[field];
+      })
+    }
+
+    if (!user) done(null, false);
+    else done(null, user);
+
+  } catch (err) {
+    console.log('err', err);
+  }
+})
 passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
 passport.use(dic.businessUserGoogleLogin, businessUserGoogleLogin);
+passport.use(dic.generialJwtLogin, generialUserJwtLogin);
