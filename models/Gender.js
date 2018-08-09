@@ -15,6 +15,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     tableName: 'gender',
+    schema: "taiwanlent",
     timestamps: false
   });
 };

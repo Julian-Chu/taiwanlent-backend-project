@@ -6,7 +6,7 @@ const sequelize = new Sequelize(Keys.connectionString);
 
 const models = {
   UserAdmin: sequelize.import('./AdminUser'),
-  UserBusiness: sequelize.import('./BusinessUser'),
+  BusinessUser: sequelize.import('./BusinessUser'),
   // UserGeneral: sequelize.import('./GeneralUser'),
   UserPersonal: sequelize.import('./PersonalUser'),
   Gender: sequelize.import('./Gender'),

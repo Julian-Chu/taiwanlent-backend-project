@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('user_business', {
+  let BusinessUser = sequelize.define('user_business', {
     user_business_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -72,15 +72,15 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    gender_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'gender',
-        key: 'gender_id'
-      },
-      defaultValue: 1
-    },
+    // gender_id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   // references: {
+    //   //   model: 'gender',
+    //   //   key: 'gender_id'
+    //   // },
+    //   defaultValue: 1
+    // },
     createdAt: {
       type: DataTypes.DATEONLY,
       allowNull: false,
@@ -101,4 +101,13 @@ module.exports = function (sequelize, DataTypes) {
     tableName: 'user_business',
     schema: "taiwanlent"
   });
+
+  BusinessUser.associate = function (models) {
+    models.BusinessUser.belongsTo(models.Gender, {
+      foreignKey: 'gender_id'
+    })
+  }
+
+
+  return BusinessUser;
 };

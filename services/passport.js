@@ -3,7 +3,7 @@
 const passport = require('passport');
 const keys = require('../config/key');
 const models = require('../models/index');
-const BusinessUser = models.UserBusiness;
+const BusinessUser = models.BusinessUser;
 const PersonalUser = models.UserPersonal;
 // const GeneralUser = models.UserGeneral;
 
@@ -57,6 +57,9 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
 
     let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
     const user = await BusinessUser.findById(payload.sub, {
+      include: [{
+        model: models.Gender,
+      }],
       attributes: {
         exclude: excludedFields
       }
