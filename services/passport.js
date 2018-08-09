@@ -5,6 +5,7 @@ const keys = require('../config/key');
 const models = require('../models/index');
 const BusinessUser = models.BusinessUser;
 const PersonalUser = models.UserPersonal;
+const Sequelize = require('sequelize');
 // const GeneralUser = models.UserGeneral;
 
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -55,13 +56,16 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
     //check role is business_user
     if (payload.role !== dic.roleBusiness) done(null, false);
 
-    let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
+    let excludedFields = ['user_business_id', 'google_id', 'facebook_id', 'gender_id'];
     const user = await BusinessUser.findById(payload.sub, {
       include: [{
         model: models.Gender,
       }],
       attributes: {
-        exclude: excludedFields
+        exclude: excludedFields,
+        include: [
+          [Sequelize.literal('gender.gender'), 'gender']
+        ]
       }
     });
 
