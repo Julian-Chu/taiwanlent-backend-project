@@ -45,16 +45,19 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    company_name: {
+    companyName: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      field: 'company_name',
+      allowNull: true,
+      defaultValue: ''
     },
     department: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    company_location: {
+    companyLocation: {
       type: DataTypes.STRING(50),
+      field: 'company_location',
       allowNull: false,
       defaultValue: ''
     },
@@ -67,9 +70,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    product_introduction: {
+    productIntroduction: {
       type: DataTypes.STRING(250),
       allowNull: false,
+      field: 'product_introduction',
       defaultValue: ''
     },
     // gender_id: {
