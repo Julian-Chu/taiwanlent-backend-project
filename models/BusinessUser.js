@@ -76,15 +76,15 @@ module.exports = function (sequelize, DataTypes) {
       field: 'product_introduction',
       defaultValue: ''
     },
-    // gender_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   // references: {
-    //   //   model: 'gender',
-    //   //   key: 'gender_id'
-    //   // },
-    //   defaultValue: 1
-    // },
+    gender_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'gender',
+        key: 'gender_id'
+      },
+      defaultValue: 1
+    },
     createdAt: {
       type: DataTypes.DATEONLY,
       allowNull: false,
