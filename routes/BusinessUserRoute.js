@@ -11,8 +11,32 @@ module.exports = app => {
 
   //用戶註冊資料  
   app.post('/api/businessuser', requireAuth.JWToken, (req, res) => {
-    console.log(req.body);
-    return res.status(204).send({});
+    console.log('req.body:', req.body);
+    console.log('req.user:', req.user);
+    let user = req.body;
+    models.BusinessUser.update({
+      email: user.email,
+      name: user.name,
+      phone: user.phone,
+      companyName: user.companyName,
+      companyLocation: user.companyLocation,
+      address: user.address,
+      industry: user.industry,
+      productIntroduction: user.productIntroduction,
+      gender: {
+        gender: user.gender
+      }
+
+    }, {
+      where: {
+        user_business_id: req.user.user_business_id
+      }
+    }).then((succeed) => {
+      console.log('succeed:', succeed);
+      return res.status(204).send({});
+    }).catch(err => console.log(err));
+
+
   })
 
   //用戶修改資料

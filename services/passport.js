@@ -56,7 +56,7 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
     //check role is business_user
     if (payload.role !== dic.roleBusiness) done(null, false);
 
-    let excludedFields = ['user_business_id', 'google_id', 'facebook_id', 'gender_id'];
+    let excludedFields = ['google_id', 'facebook_id', 'gender_id'];
     const user = await BusinessUser.findById(payload.sub, {
       include: [{
         model: models.Gender,
