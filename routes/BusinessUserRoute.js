@@ -10,13 +10,10 @@ module.exports = app => {
   });
 
   //用戶註冊資料
-  app.post("/api/businessuser", requireAuth.JWToken, (req, res) => {
-    console.log("req.body:", req.body);
-    // console.log('req.user:', req.user);
+  app.post("/api/businessuser", requireAuth.JWToken, async (req, res) => {
     let user = req.body;
-
-    models.BusinessUser.update({
-        // user_business_id: req.user.user_business_id,
+    try {
+      let result = await models.BusinessUser.update({
         email: user.email,
         name: user.name,
         phone: user.phone,
@@ -30,13 +27,13 @@ module.exports = app => {
         where: {
           user_business_id: req.user.user_business_id
         },
-        // include:[models.Gender]
       })
-      .then(businessuser => {
-        console.log("user:", businessuser);
-        return res.status(204).send({});
-      })
-      .catch(err => console.log(err));
+      console.log("user:", result);
+      return res.status(204).send({});
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send({});
+    }
   });
 
   //用戶修改資料
