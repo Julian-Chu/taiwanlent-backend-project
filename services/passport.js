@@ -26,7 +26,7 @@ const businessUserLocalLogin = new LocalStrategy({
       where: {
         username: username
       },
-      attributes: ['userId', 'username', 'password', 'emailVerified']
+      attributes: ['user_business_id', 'username', 'password', 'emailVerified']
     });
     if (!user) return done(null, false);
     const hashFromDB = user.password;
@@ -45,16 +45,26 @@ const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Bearer <token>
   secretOrKey: keys.jwtSecretKey,
   jsonWebTokenOptions: {
-    maxAge: "7d"
+    maxAge: "10s"
   }
 };
 
 const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    console.log(payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
+    console.log('businessUserJwt:', payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user',exp:'1534106991601' }
 
+    // let expireTime = new Date(payload.exp).getSeconds();
+    console.log('exp:', payload.exp);
+    // console.log('expTime:', expireTime);
+    console.log(Date.now());
+    done(null, false);
+    if (payload.exp <= Date.now()) {
+      console.log('token expired');
+      done(null, null);
+    }
     //check role is business_user
     if (payload.role !== dic.roleBusiness) done(null, false);
+    console.log("test!!!!!!!!!!!!!")
 
     let excludedFields = ['google_id', 'facebook_id', 'gender_id'];
     const user = await BusinessUser.findById(payload.sub, {

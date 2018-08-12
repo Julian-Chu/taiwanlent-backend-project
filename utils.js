@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const keys = require('./config/key');
 const dic = require('./dic');
+const jwt1 = require('jsonwebtoken');
 async function hashPassword(plainTextPassword) {
   const saltRounds = 10;
   const hashPassword = await new Promise((resolve, reject) => {
@@ -19,17 +20,33 @@ async function hashPassword(plainTextPassword) {
 function createTokenForBusinessUser(user) {
   // console.log('jwt key:', keys.jwtSecretKey);
   // console.log('user:', user);
-  const timestamp = new Date().getTime();
-  return jwt.encode({
-    sub: user.user_business_id,
-    iat: timestamp,
-    verified: user.emailVerified || false,
-    role: dic.roleBusiness
-  }, keys.jwtSecretKey)
+  const timestamp = Date.now();
+  // return jwt.encode({
+  //   sub: user.user_business_id,
+  //   iat: timestamp,
+  //   verified: user.emailVerified || false,
+  //   role: dic.roleBusiness,
+  //   exp: expiredAt
+  // }, keys.jwtSecretKey)
+  return jwt1.sign({
+      sub: user.user_business_id,
+      iat: timestamp,
+      verified: user.emailVerified || false,
+      role: dic.roleBusiness,
+      // exp: expiredAt
+    },
+    keys.jwtSecretKey, {
+      expiresIn: 10000
+    }
+  )
 };
 
 function decodeToken(token) {
-  return jwt.decode(token, keys.jwtSecretKey);
+  // return jwt.decode(token, keys.jwtSecretKey);
+  return jwt1.verify(token, keys.jwtSecretKey, function (err, decoded) {
+    console.log('verify jwt:', err);
+    return decoded;
+  })
 }
 
 
