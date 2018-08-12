@@ -11,13 +11,13 @@ const createTokenForBusinessUser = require('../utils').createTokenForBusinessUse
 
 module.exports = app => {
   app.get(
-    "/auth/google",
-    requireAuth.GoogleLogin
+    "/auth/google/business",
+    requireAuth.GoogleLoginBusiness
   );
 
   app.get(
-    "/auth/google/callback",
-    requireAuth.GoogleLogin,
+    "/auth/google/business/callback",
+    requireAuth.GoogleLoginBusiness,
     (req, res) => {
       console.log("google callback:", req.user);
       let token = createTokenForBusinessUser(req.user);

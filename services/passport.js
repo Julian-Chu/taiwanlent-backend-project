@@ -82,9 +82,9 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
 })
 
 const businessUserGoogleLogin = new GoogleStrategy({
-    clientID: keys.googleClientID,
-    clientSecret: keys.googleClientSecret,
-    callbackURL: '/auth/google/callback',
+    clientID: keys.googleClientID_business,
+    clientSecret: keys.googleClientSecret_business,
+    callbackURL: '/auth/google/business/callback',
     proxy: true
   },
   async (accessToken, refreshtoken, profile, done) => {

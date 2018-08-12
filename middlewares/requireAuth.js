@@ -9,7 +9,7 @@ const JWToken = passport.authenticate(dic.businessJwtLogin, {
   session: false
 })
 
-const GoogleLogin = passport.authenticate(dic.businessUserGoogleLogin, {
+const GoogleLoginBusiness = passport.authenticate(dic.businessUserGoogleLogin, {
   scope: ['profile', 'email'],
   // failureRedirect: '/',
   session: false
@@ -18,5 +18,5 @@ const GoogleLogin = passport.authenticate(dic.businessUserGoogleLogin, {
 module.exports = {
   LocalLogin,
   JWToken,
-  GoogleLogin
+  GoogleLoginBusiness
 }

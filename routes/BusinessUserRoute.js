@@ -5,7 +5,6 @@ const models = require("../models/index");
 module.exports = app => {
   //取得用戶資料
   app.get("/api/businessuser", requireAuth.JWToken, (req, res) => {
-    console.log("get user data");
     return res.send(req.user);
   });
 
