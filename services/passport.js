@@ -44,9 +44,11 @@ const jwtOptions = {
   // jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Bearer <token>
   secretOrKey: keys.jwtSecretKey,
+  ignoreExpiration: false,
   jsonWebTokenOptions: {
-    maxAge: "10s"
-  }
+    maxAge: "10"
+  },
+
 };
 
 const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
@@ -57,14 +59,12 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
     console.log('exp:', payload.exp);
     // console.log('expTime:', expireTime);
     console.log(Date.now());
-    done(null, false);
     if (payload.exp <= Date.now()) {
       console.log('token expired');
-      done(null, null);
+      return done(null, false);
     }
     //check role is business_user
-    if (payload.role !== dic.roleBusiness) done(null, false);
-    console.log("test!!!!!!!!!!!!!")
+    if (payload.role !== dic.roleBusiness) return done(null, false);
 
     let excludedFields = ['google_id', 'facebook_id', 'gender_id'];
     const user = await BusinessUser.findById(payload.sub, {
@@ -83,8 +83,8 @@ const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
       delete user[field];
     })
 
-    if (!user) done(null, false);
-    else done(null, user);
+    if (!user) return done(null, false);
+    else return done(null, user);
 
   } catch (err) {
     console.log('err', err);
@@ -109,14 +109,14 @@ const businessUserGoogleLogin = new GoogleStrategy({
         attributes: ['user_business_id', 'google_id']
       })
       if (existingUser) {
-        done(null, existingUser);
+        return done(null, existingUser);
       } else {
         console.log('user not exist, create new user');
         const businessUser = await BusinessUser.create({
           google_id: profile.id
         });
         console.log('businessUser:', businessUser);
-        done(null, businessUser);
+        return done(null, businessUser);
       }
     } catch (err) {
       console.log(Date.now());
@@ -131,7 +131,7 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
     console.log(payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
 
     //check role is business_user
-    if (payload.role !== dic.roleBusiness || payload.role !== dic.rolePersonal) done(null, false);
+    if (payload.role !== dic.roleBusiness || payload.role !== dic.rolePersonal) return done(null, false);
     let user;
     if (payload.role === dic.roleBusiness) {
 
@@ -156,8 +156,8 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
       })
     }
 
-    if (!user) done(null, false);
-    else done(null, user);
+    if (!user) return done(null, false);
+    else return done(null, user);
 
   } catch (err) {
     console.log('err', err);

@@ -30,13 +30,13 @@ function createTokenForBusinessUser(user) {
   // }, keys.jwtSecretKey)
   return jwt1.sign({
       sub: user.user_business_id,
-      iat: timestamp,
+      iat: timestamp, // default iat in passport is seconds
       verified: user.emailVerified || false,
       role: dic.roleBusiness,
-      // exp: expiredAt
+      exp: timestamp + 10000 //ms
     },
     keys.jwtSecretKey, {
-      expiresIn: 10000
+      // expiresIn: 10000
     }
   )
 };
