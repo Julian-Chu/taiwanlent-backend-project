@@ -10,6 +10,16 @@ const hashPassword = require('../utils').hashPassword;
 const createTokenForBusinessUser = require('../utils').createTokenForBusinessUser;
 
 module.exports = app => {
+  app.get("/auth/google/peronsal", requireAuth.GoogleLoginPersonal);
+
+  app.get(
+    "/auth/google/personal/callback", requireAuth.GoogleLoginPeronsal,
+    (req, res) => {
+      console.log("google personal user callback:", req.user);
+      let token = createTokenForPersonalUser(req.user);
+      res.redirect('/login?token=' + token);
+    }
+  )
   app.get(
     "/auth/google/business",
     requireAuth.GoogleLoginBusiness

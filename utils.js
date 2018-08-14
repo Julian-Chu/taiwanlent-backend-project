@@ -1,10 +1,9 @@
 //@ts-check
 'use strict';
 const bcrypt = require('bcrypt');
-const jwt = require('jwt-simple');
 const keys = require('./config/key');
 const dic = require('./dic');
-const jwt1 = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 async function hashPassword(plainTextPassword) {
   const saltRounds = 10;
   const hashPassword = await new Promise((resolve, reject) => {
@@ -13,27 +12,21 @@ async function hashPassword(plainTextPassword) {
       resolve(res);
     });
   })
-
   return hashPassword;
 };
 
+
+let tokenExpired = 7 * 24 * 60 * 60 * 1000 //7Days
 function createTokenForBusinessUser(user) {
   // console.log('jwt key:', keys.jwtSecretKey);
   // console.log('user:', user);
   const timestamp = Date.now();
-  // return jwt.encode({
-  //   sub: user.user_business_id,
-  //   iat: timestamp,
-  //   verified: user.emailVerified || false,
-  //   role: dic.roleBusiness,
-  //   exp: expiredAt
-  // }, keys.jwtSecretKey)
-  return jwt1.sign({
+  return jwt.sign({
       sub: user.user_business_id,
       iat: timestamp, // default iat in passport is seconds
       verified: user.emailVerified || false,
       role: dic.roleBusiness,
-      exp: timestamp + 10000 //ms
+      exp: timestamp + tokenExpired //ms
     },
     keys.jwtSecretKey, {
       // expiresIn: 10000
@@ -41,9 +34,21 @@ function createTokenForBusinessUser(user) {
   )
 };
 
+function createTokenForPersonalUser(user) {
+
+  const timestamp = Date.now();
+  return jwt.sign({
+      sub: user.user_personal_id,
+      iat: timestamp, // default iat in passport is seconds
+      role: dic.roleBusiness,
+      exp: timestamp + tokenExpired //ms
+    },
+    keys.jwtSecretKey)
+}
+
 function decodeToken(token) {
   // return jwt.decode(token, keys.jwtSecretKey);
-  return jwt1.verify(token, keys.jwtSecretKey, function (err, decoded) {
+  return jwt.verify(token, keys.jwtSecretKey, function (err, decoded) {
     console.log('verify jwt:', err);
     return decoded;
   })
@@ -60,10 +65,10 @@ async function comparePassword(hashedPassword, hashFromDB) {
   return isEqual;
 };
 
-
 module.exports = {
   hashPassword,
   createTokenForBusinessUser,
   comparePassword,
-  decodeToken
+  decodeToken,
+  createTokenForPersonalUser
 }
