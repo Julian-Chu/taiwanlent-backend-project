@@ -4,6 +4,8 @@ const businessUserGoogleLogin = 'business_google';
 const generialJwtLogin = 'generialJwtLogin';
 const roleBusiness = "business_user";
 const rolePersonal = "personal_user";
+const peronsalUserGoogleLogin = "personal_google"
+
 
 module.exports = {
   businessJwtLogin,
@@ -11,5 +13,6 @@ module.exports = {
   businessUserGoogleLogin,
   generialJwtLogin,
   roleBusiness,
-  rolePersonal
+  rolePersonal,
+  peronsalUserGoogleLogin
 }

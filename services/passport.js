@@ -126,6 +126,40 @@ const businessUserGoogleLogin = new GoogleStrategy({
   }
 )
 
+
+const personalUserGoogleLogin = new GoogleStrategy({
+    clientID: keys.googleClientID_personal,
+    clientSecret: keys.googleClientSecret_personal,
+    callbackURL: '/auth/google/peronsal/callback',
+    proxy: true
+  },
+  async (accessToken, refreshtoken, profile, done) => {
+    console.log("in google stragety");
+    try {
+
+      const existingUser = await PersonalUser.findOne({
+        where: {
+          google_id: profile.id
+        },
+        attributes: ['user_peronsal_id', 'google_id']
+      })
+      if (existingUser) {
+        return done(null, existingUser);
+      } else {
+        console.log('user not exist, create new user');
+        const personalUser = await PersonalUser.create({
+          google_id: profile.id
+        });
+        console.log('peronsalUser:', personalUser);
+        return done(null, personalUser);
+      }
+    } catch (err) {
+      console.log(Date.now());
+      console.log(err);
+    }
+  }
+)
+
 const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     console.log(payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
@@ -167,3 +201,4 @@ passport.use(dic.businessLocalLogin, businessUserLocalLogin);
 passport.use(dic.businessJwtLogin, businessUserJwtLogin);
 passport.use(dic.businessUserGoogleLogin, businessUserGoogleLogin);
 passport.use(dic.generialJwtLogin, generialUserJwtLogin);
+passport.use(dic.peronsalUserGoogleLogin, personalUserGoogleLogin);
