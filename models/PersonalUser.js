@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-  return sequelize.define('user_personal', {
+  let PersonalUser = sequelize.define('user_personal', {
     user_personal_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -20,41 +20,43 @@ module.exports = function (sequelize, DataTypes) {
     },
     username: {
       type: DataTypes.STRING(25),
-      allowNull: false,
+      // allowNull: false,
       unique: true
     },
     password: {
       type: DataTypes.STRING(25),
-      allowNull: false
+      allowNull: true
     },
     email: {
       type: DataTypes.STRING(320),
-      allowNull: false,
+      // allowNull: false,
       primaryKey: true
     },
     name: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      // allowNull: false
     },
     phone: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      // allowNull: false
     },
     city: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      // allowNull: false
     },
     occupation: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      // allowNull: false
     },
     living_year_in_germany: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      // allowNull: true,
+      defaultValue: 0
     },
     school: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      // allowNull: false
     },
     work_experience_1: {
       type: DataTypes.STRING(50),
@@ -70,23 +72,23 @@ module.exports = function (sequelize, DataTypes) {
     },
     german: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      // allowNull: false
     },
     english: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      // allowNull: false
     },
     chinese: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      // allowNull: false
     },
     driving_licence: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      // allowNull: false
     },
     relocation: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      // allowNull: false
     },
     self_introduction: {
       type: DataTypes.STRING,
@@ -106,7 +108,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     gender_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
       references: {
         model: 'gender',
         key: 'gender_id'
@@ -114,7 +116,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     region_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
       references: {
         model: 'region',
         key: 'region_id'
@@ -122,7 +124,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     subject_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      // allowNull: false,
       references: {
         model: 'subject',
         key: 'subject_id'
@@ -132,13 +134,16 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING(2083),
       allowNull: true
     },
-    create_at: {
+    createdAt: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+      field: 'create_at',
     },
-    change_at: {
+    updatedAt: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
+
+      field: 'change_at',
     },
     resume_open: {
       type: DataTypes.BOOLEAN,
@@ -146,6 +151,14 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: false
     }
   }, {
-    tableName: 'user_personal'
+    tableName: 'user_personal',
+    schema: "taiwanlent"
   });
+  PersonalUser.associate = function (models) {
+    models.PersonalUser.belongsTo(models.Gender, {
+      foreignKey: 'gender_id'
+    })
+  }
+
+  return PersonalUser;
 };

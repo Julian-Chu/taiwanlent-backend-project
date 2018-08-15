@@ -68,7 +68,7 @@ CREATE TABLE user_personal
  phone                 VARCHAR(50) NOT NULL DEFAULT '',
  city                  VARCHAR(50) NOT NULL DEFAULT '',
  occupation            VARCHAR(50) NOT NULL DEFAULT '',
- living_year_in_germany INT NOT NULL ,
+ living_year_in_germany INT NOT NULL DEFAULT 0 ,
  school                VARCHAR(50) NOT NULL DEFAULT '',
  work_experience_1     VARCHAR(50) ,
  work_experience_2     VARCHAR(50) ,

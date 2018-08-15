@@ -4,7 +4,7 @@ const passport = require('passport');
 const keys = require('../config/key');
 const models = require('../models/index');
 const BusinessUser = models.BusinessUser;
-const PersonalUser = models.UserPersonal;
+const PersonalUser = models.PersonalUser;
 const Sequelize = require('sequelize');
 // const GeneralUser = models.UserGeneral;
 
@@ -130,7 +130,7 @@ const businessUserGoogleLogin = new GoogleStrategy({
 const personalUserGoogleLogin = new GoogleStrategy({
     clientID: keys.googleClientID_personal,
     clientSecret: keys.googleClientSecret_personal,
-    callbackURL: '/auth/google/peronsal/callback',
+    callbackURL: '/auth/google/personal/callback',
     proxy: true
   },
   async (accessToken, refreshtoken, profile, done) => {
@@ -141,7 +141,7 @@ const personalUserGoogleLogin = new GoogleStrategy({
         where: {
           google_id: profile.id
         },
-        attributes: ['user_peronsal_id', 'google_id']
+        attributes: ['user_personal_id', 'google_id']
       })
       if (existingUser) {
         return done(null, existingUser);

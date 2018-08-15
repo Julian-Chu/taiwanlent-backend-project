@@ -8,7 +8,7 @@ const models = {
   UserAdmin: sequelize.import('./AdminUser'),
   BusinessUser: sequelize.import('./BusinessUser'),
   // UserGeneral: sequelize.import('./GeneralUser'),
-  UserPersonal: sequelize.import('./PersonalUser'),
+  PersonalUser: sequelize.import('./PersonalUser'),
   Gender: sequelize.import('./Gender'),
   Region: sequelize.import('./Region'),
   Subject: sequelize.import('./Subject')

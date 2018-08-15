@@ -13,7 +13,7 @@ const createTokenForPersonalUser = require("../utils")
   .createTokenForPersonalUser;
 
 module.exports = app => {
-  app.get("/auth/google/peronsal", requireAuth.GoogleLoginPersonal);
+  app.get("/auth/google/personal", requireAuth.GoogleLoginPersonal);
 
   app.get(
     "/auth/google/personal/callback",
