@@ -15,7 +15,7 @@ const GoogleLoginBusiness = passport.authenticate(dic.businessUserGoogleLogin, {
   session: false
 })
 
-const GoogleLoginPeronsal = passport.authenticate(dic.peronsalUserGoogleLogin, {
+const GoogleLoginPersonal = passport.authenticate(dic.peronsalUserGoogleLogin, {
   scope: ['profile', 'email'],
   session: false
 })
@@ -24,5 +24,5 @@ module.exports = {
   LocalLogin,
   JWToken,
   GoogleLoginBusiness,
-  GoogleLoginPeronsal
+  GoogleLoginPersonal
 }
