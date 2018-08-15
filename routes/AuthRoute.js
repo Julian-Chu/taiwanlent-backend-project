@@ -1,29 +1,31 @@
 // @ts-check
-'use strict';
-const models = require('../models/index');
+"use strict";
+const models = require("../models/index");
 const BusinessUser = models.UserBusiness;
-const Mailer = require('../services/Mailer');
-const verifyTemplate = require('../services/emailTemplates/businessUserVerifyTemplate');
-const vtokenEncryption = require('../services/vtokenEncryption');
-const requireAuth = require('../middlewares/requireAuth');
-const hashPassword = require('../utils').hashPassword;
-const createTokenForBusinessUser = require('../utils').createTokenForBusinessUser;
+const Mailer = require("../services/Mailer");
+const verifyTemplate = require("../services/emailTemplates/businessUserVerifyTemplate");
+const vtokenEncryption = require("../services/vtokenEncryption");
+const requireAuth = require("../middlewares/requireAuth");
+const hashPassword = require("../utils").hashPassword;
+const createTokenForBusinessUser = require("../utils")
+  .createTokenForBusinessUser;
+const createTokenForPersonalUser = require("../utils")
+  .createTokenForPersonalUser;
 
 module.exports = app => {
   app.get("/auth/google/peronsal", requireAuth.GoogleLoginPersonal);
 
   app.get(
-    "/auth/google/personal/callback", requireAuth.GoogleLoginPeronsal,
+    "/auth/google/personal/callback",
+    requireAuth.GoogleLoginPersonal,
     (req, res) => {
       console.log("google personal user callback:", req.user);
       let token = createTokenForPersonalUser(req.user);
-      res.redirect('/login?token=' + token);
+      let role = "personal";
+      res.redirect(`/login?token=${token}&role=${role}`);
     }
-  )
-  app.get(
-    "/auth/google/business",
-    requireAuth.GoogleLoginBusiness
   );
+  app.get("/auth/google/business", requireAuth.GoogleLoginBusiness);
 
   app.get(
     "/auth/google/business/callback",
@@ -31,12 +33,13 @@ module.exports = app => {
     (req, res) => {
       console.log("google callback:", req.user);
       let token = createTokenForBusinessUser(req.user);
-      res.redirect('/login?token=' + token);
+      let role = "business";
+      res.redirect(`/login?token=${token}&role=${role}`);
     }
   );
 
   app.get("/auth/logout", (req, res) => {
-    res.redirect('/logout')
+    res.redirect("/logout");
   });
 
   app.post("/auth/business/signin", requireAuth.LocalLogin, (req, res) => {
@@ -45,13 +48,13 @@ module.exports = app => {
     });
   });
 
-  app.post('/auth/business/signup', async (req, res) => {
+  app.post("/auth/business/signup", async (req, res) => {
     const username = req.body.username || null;
     const password = req.body.password || null;
 
     if (!username || !password) {
       return res.status(400).send({
-        error: 'username or password is empty'
+        error: "username or password is empty"
       });
     }
 
@@ -62,7 +65,7 @@ module.exports = app => {
     });
     if (user) {
       return res.status(403).send({
-        error: 'username already exists'
+        error: "username already exists"
       });
     }
 
@@ -78,18 +81,20 @@ module.exports = app => {
     });
   });
 
-  app.get('/auth/business/verification', async (req, res) => {
+  app.get("/auth/business/verification", async (req, res) => {
     const token = JSON.parse(vtokenEncryption.decrypt(req.query.token));
-    if (Date.now() >= token.expiredAt) return res.status(400).send({
-      error: 'expired token'
-    });
+    if (Date.now() >= token.expiredAt)
+      return res.status(400).send({
+        error: "expired token"
+      });
     try {
       let user = await BusinessUser.findById(token.userId, {
-        attributes: ['user_business_id', 'email', 'email_verified']
+        attributes: ["user_business_id", "email", "email_verified"]
       });
-      if (!user || user.email !== token.email) return res.status(400).send({
-        error: 'user data not correct'
-      });
+      if (!user || user.email !== token.email)
+        return res.status(400).send({
+          error: "user data not correct"
+        });
       // console.log(user);
       await BusinessUser.update({
         emailVerified: true
@@ -98,14 +103,14 @@ module.exports = app => {
           userId: token.userId
         }
       });
-      return res.status(204).send('verified');
-
+      return res.status(204).send("verified");
     } catch (err) {
       return res.status(400).send(err);
     }
   });
 
-  app.post('/auth/business/verification',
+  app.post(
+    "/auth/business/verification",
     requireAuth.JWToken,
     async (req, res) => {
       // console.log('User:',req.user);
@@ -113,11 +118,11 @@ module.exports = app => {
         email: req.user.email,
         expiredAt: Date.now() + 3 * 24 * 60 * 60 * 1000,
         userId: req.user.userId
-      }
+      };
       let user = {
         name: req.user.name,
         verifyToken: vtokenEncryption.encrypt(JSON.stringify(token)),
-        subject: 'Verify your account! Taiwanlent',
+        subject: "Verify your account! Taiwanlent",
         email: req.user.email
       };
       const mailer = new Mailer(user, verifyTemplate(user));
@@ -129,5 +134,6 @@ module.exports = app => {
         // console.log('error to send email verifier');
         res.status(401).send(err);
       }
-    })
-}
+    }
+  );
+};
