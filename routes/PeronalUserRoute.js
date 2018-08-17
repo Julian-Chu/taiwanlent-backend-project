@@ -2,6 +2,8 @@
 'use strict'
 const models = require('../models/index');
 const PersonalUser = models.UserPersonal;
+const requireAuth = require("../middlewares/requireAuth");
+
 
 module.exports = app => {
   // app.get("/user", (req, res) => {
@@ -24,14 +26,11 @@ module.exports = app => {
   //   }
   // });
 
-  app.get("/api/personaluser", (req, res) => {
-    const user = {} //todo: get data from database
-    res.status(200).send({
-      user
-    });
+  app.get("/api/personaluser", requireAuth.JWToken, (req, res) => {
+    return res.status(200).send(req.user);
   })
   // 註冊用戶資料
-  app.post("/api/peronsaluser", (req, res) => {
+  app.post("/api/personaluser", (req, res) => {
     console.log(req.body);
     const user = PersonalUser.build({
       username: req.username,
