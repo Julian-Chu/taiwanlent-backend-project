@@ -31,7 +31,7 @@ module.exports = app => {
     "/auth/google/business/callback",
     requireAuth.GoogleLoginBusiness,
     (req, res) => {
-      console.log("google callback:", req.user);
+      console.log("google callback:", req.user.dataValues);
       let token = createTokenForBusinessUser(req.user);
       let role = "business";
       res.redirect(`/login?token=${token}&role=${role}`);

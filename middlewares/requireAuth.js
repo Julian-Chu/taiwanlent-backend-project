@@ -5,7 +5,7 @@ const dic = require('../dic');
 const LocalLogin = passport.authenticate(dic.businessLocalLogin, {
   session: false
 })
-const JWToken = passport.authenticate(dic.businessJwtLogin, {
+const JWToken = passport.authenticate(dic.generialJwtLogin, {
   session: false
 })
 

@@ -162,22 +162,22 @@ const personalUserGoogleLogin = new GoogleStrategy({
 
 const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    console.log(payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
+    console.log('Jwt log in', payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user' }
 
     //check role is business_user
-    if (payload.role !== dic.roleBusiness || payload.role !== dic.rolePersonal) return done(null, false);
+    if (payload.role !== dic.roleBusiness && payload.role !== dic.rolePersonal) return done(null, false);
     let user;
     if (payload.role === dic.roleBusiness) {
-
+      console.log('business user');
       let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
       user = await BusinessUser.findById(payload.sub, {
         attributes: {
           exclude: excludedFields
         }
       });
-      excludedFields.forEach(field => {
-        delete user[field];
-      })
+      // excludedFields.forEach(field => {
+      //   delete user[field];
+      // })
     } else if (payload.role === dic.rolePersonal) {
       let excludedFields = ['user_personal_id', 'google_id', 'facebook_id'];
       user = await PersonalUser.findById(payload.sub, {
@@ -185,9 +185,9 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
           exclude: excludedFields
         }
       });
-      excludedFields.forEach(field => {
-        delete user[field];
-      })
+      // excludedFields.forEach(field => {
+      //   delete user[field];
+      // })
     }
 
     if (!user) return done(null, false);

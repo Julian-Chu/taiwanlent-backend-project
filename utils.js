@@ -40,7 +40,7 @@ function createTokenForPersonalUser(user) {
   return jwt.sign({
       sub: user.user_personal_id,
       iat: timestamp, // default iat in passport is seconds
-      role: dic.roleBusiness,
+      role: dic.rolePersonal,
       exp: timestamp + tokenExpired //ms
     },
     keys.jwtSecretKey)
