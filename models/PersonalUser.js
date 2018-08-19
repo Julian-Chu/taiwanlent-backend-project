@@ -108,7 +108,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     gender_id: {
       type: DataTypes.INTEGER,
-      // allowNull: false,
+      allowNull: false,
       references: {
         model: 'gender',
         key: 'gender_id'
@@ -154,10 +154,17 @@ module.exports = function (sequelize, DataTypes) {
     tableName: 'user_personal',
     schema: "taiwanlent"
   });
+
   PersonalUser.associate = function (models) {
     models.PersonalUser.belongsTo(models.Gender, {
       foreignKey: 'gender_id'
-    })
+    });
+    models.PersonalUser.belongsTo(models.Region, {
+      foreignKey: "region_id"
+    });
+    models.PersonalUser.belongsTo(models.Subject, {
+      foreignKey: "subject_id"
+    });
   }
 
   return PersonalUser;

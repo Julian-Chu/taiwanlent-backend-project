@@ -20,6 +20,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     tableName: 'subject',
+    schema: "taiwanlent",
     timestamps: false
   });
 };

@@ -197,8 +197,24 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
     } else if (payload.role === dic.rolePersonal) {
       let excludedFields = ['user_personal_id', 'google_id', 'facebook_id'];
       user = await PersonalUser.findById(payload.sub, {
+        include: [{
+            model: models.Gender,
+          },
+          {
+            model: models.Region
+          },
+          {
+            model: models.Subject
+          }
+
+        ],
         attributes: {
-          exclude: excludedFields
+          exclude: excludedFields,
+          include: [
+            [Sequelize.literal('gender.gender'), 'gender'],
+            [Sequelize.literal('region.region_value'), 'region'],
+            [Sequelize.literal('subject.subject_value'), 'subject']
+          ]
         }
       });
       // excludedFields.forEach(field => {

@@ -20,6 +20,7 @@ module.exports = function (sequelize, DataTypes) {
     }
   }, {
     tableName: 'region',
+    schema: "taiwanlent",
     timestamps: false
   });
 };
