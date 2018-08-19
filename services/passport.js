@@ -169,12 +169,28 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
     let user;
     if (payload.role === dic.roleBusiness) {
       console.log('business user');
-      let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
+      // let excludedFields = ['user_business_id', 'google_id', 'facebook_id'];
+      // user = await BusinessUser.findById(payload.sub, {
+      //   attributes: {
+      //     exclude: excludedFields
+      //   }
+      // });
+      let excludedFields = ['google_id', 'facebook_id', 'gender_id'];
       user = await BusinessUser.findById(payload.sub, {
+        include: [{
+          model: models.Gender,
+        }],
         attributes: {
-          exclude: excludedFields
+          exclude: excludedFields,
+          include: [
+            [Sequelize.literal('gender.gender'), 'gender']
+          ]
         }
       });
+
+      excludedFields.forEach(field => {
+        delete user[field];
+      })
       // excludedFields.forEach(field => {
       //   delete user[field];
       // })
