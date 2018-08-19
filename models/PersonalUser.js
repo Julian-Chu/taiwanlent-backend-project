@@ -60,17 +60,17 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       // allowNull: false
     },
-    workexperience_1: {
+    workExperience_1: {
       type: DataTypes.STRING(50),
       allowNull: true,
       field: 'work_experience_1'
     },
-    workexperience_2: {
+    workExperience_2: {
       type: DataTypes.STRING(50),
       allowNull: true,
       field: 'work_experience_2'
     },
-    workexperience_3: {
+    workExperience_3: {
       type: DataTypes.STRING(50),
       allowNull: true,
       field: 'work_experience_3'
@@ -90,16 +90,16 @@ module.exports = function (sequelize, DataTypes) {
     licence: {
       type: DataTypes.BOOLEAN,
       // allowNull: false
-
       field: 'driving_licence'
     },
     relocation: {
       type: DataTypes.BOOLEAN,
       // allowNull: false
     },
-    self_introduction: {
+    selfIntroduction: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      field: 'self_introduction'
     },
     german_certificate: {
       type: DataTypes.STRING(50),

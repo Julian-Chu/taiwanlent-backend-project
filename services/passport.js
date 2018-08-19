@@ -175,7 +175,7 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
       //     exclude: excludedFields
       //   }
       // });
-      let excludedFields = ['google_id', 'facebook_id', 'gender_id'];
+      let excludedFields = ['google_id', 'facebook_id'];
       user = await BusinessUser.findById(payload.sub, {
         include: [{
           model: models.Gender,
@@ -195,7 +195,7 @@ const generialUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) =
       //   delete user[field];
       // })
     } else if (payload.role === dic.rolePersonal) {
-      let excludedFields = ['user_personal_id', 'google_id', 'facebook_id'];
+      let excludedFields = ['google_id', 'facebook_id'];
       user = await PersonalUser.findById(payload.sub, {
         include: [{
             model: models.Gender,
