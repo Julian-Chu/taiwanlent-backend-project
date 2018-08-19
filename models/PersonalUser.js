@@ -48,27 +48,32 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       // allowNull: false
     },
-    living_year_in_germany: {
+    livingYearsInGermany: {
       type: DataTypes.INTEGER,
       allowNull: false,
       // allowNull: true,
-      defaultValue: 0
+      defaultValue: 0,
+      field: 'living_year_in_germany'
+
     },
     school: {
       type: DataTypes.STRING(50),
       // allowNull: false
     },
-    work_experience_1: {
+    workexperience_1: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'work_experience_1'
     },
-    work_experience_2: {
+    workexperience_2: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'work_experience_2'
     },
-    work_experience_3: {
+    workexperience_3: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'work_experience_3'
     },
     german: {
       type: DataTypes.BOOLEAN,
@@ -82,9 +87,11 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       // allowNull: false
     },
-    driving_licence: {
+    licence: {
       type: DataTypes.BOOLEAN,
       // allowNull: false
+
+      field: 'driving_licence'
     },
     relocation: {
       type: DataTypes.BOOLEAN,
