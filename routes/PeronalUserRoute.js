@@ -31,40 +31,68 @@ module.exports = app => {
   })
   // 註冊用戶資料
   app.post("/api/personaluser", requireAuth.JWToken, async (req, res) => {
-    console.log(req.body);
+    console.log('req.body:', req.body);
+    let userdata = req.body;
+
     try {
+      const subject_id = await models.Subject.findOne({
+        where: {
+          subject_value: userdata.subject
+        },
+        attributes: ['subject_id']
+      }).then(res => {
+        console.log('sub res:', res);
+        return res.dataValues.subject_id;
+      });
+
+      const region_id = await models.Region.findOne({
+        where: {
+          region_value: userdata.region
+        },
+        attributes: ['region_id']
+      }).then(res => {
+        console.log('region res:', res);
+        return res.dataValues.region_id
+      })
+
+      console.log('sub_id:', subject_id);
+      console.log(region_id);
+
+
+      // console.log('sub_id:', subject_id);
       const result = await models.PersonalUser.update({
-        username: req.username,
-        email: req.email,
-        name: req.name,
-        phone: req.phone,
-        city: req.city,
-        occupation: req.occupation,
-        livingYearInGermany: req.livingYearInGermany,
-        school: req.school,
-        workExperience_1: req.workExperience_1,
-        workExperience_2: req.workExperience_2,
-        workExperience_3: req.workExperience_3,
-        german: req.german,
-        english: req.english,
-        chinese: req.chinese,
-        drivingLicence: req.drivingLicence,
-        relocation: req.relocation,
-        selfIntroduction: req.selfIntroduction,
-        germanCertificate: req.germanCertificate,
-        englishCertificate: req.english,
-        chineseCertificate: req.chinese,
-        gender_id: req.gender_id,
-        region_id: req.region_id,
-        subject_id: req.subject_id,
-        photolink: req.photolink,
-        resumeIsOpened: req.resumeIsOpened
+        username: userdata.username,
+        email: userdata.email,
+        name: userdata.name,
+        phone: userdata.phone,
+        city: userdata.city,
+        occupation: userdata.occupation,
+        livingYearInGermany: userdata.livingYearInGermany,
+        school: userdata.school,
+        workExperience_1: userdata.workExperience_1,
+        workExperience_2: userdata.workExperience_2,
+        workExperience_3: userdata.workExperience_3,
+        german: userdata.german,
+        english: userdata.english,
+        chinese: userdata.chinese,
+        licence: userdata.licence,
+        relocation: userdata.relocation,
+        selfIntroduction: userdata.selfIntroduction,
+        german_certificate: userdata.german_certificate,
+        english_certificate: userdata.english_certificate,
+        chinese_certificate: userdata.chinese_certificate,
+        gender_id: userdata.gender === "male" ? 1 : 2,
+        region_id: userdata.region_id,
+        subject_id: userdata.subject_id,
+        photolink: userdata.photolink,
+        resumeIsOpened: userdata.resumeIsOpened
       }, {
         where: {
           user_personal_id: req.user.user_personal_id
         }
       });
       console.log('user:', result);
+      return res.status(204).send({});
     } catch (err) {
       console.log(err);
       return res.status(400).send({})
