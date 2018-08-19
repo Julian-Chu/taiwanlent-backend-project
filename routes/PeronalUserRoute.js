@@ -35,25 +35,30 @@ module.exports = app => {
     let userdata = req.body;
 
     try {
-      const subject_id = await models.Subject.findOne({
-        where: {
-          subject_value: userdata.subject
-        },
-        attributes: ['subject_id']
-      }).then(res => {
-        console.log('sub res:', res);
-        return res.dataValues.subject_id;
-      });
-
-      const region_id = await models.Region.findOne({
-        where: {
-          region_value: userdata.region
-        },
-        attributes: ['region_id']
-      }).then(res => {
-        console.log('region res:', res);
-        return res.dataValues.region_id
-      })
+      let subject_id;
+      if (userdata.subject) {
+        subject_id = await models.Subject.findOne({
+          where: {
+            subject_value: userdata.subject
+          },
+          attributes: ['subject_id']
+        }).then(res => {
+          console.log('sub res:', res);
+          return res.dataValues.subject_id;
+        });
+      }
+      let region_id;
+      if (userdata.region) {
+        region_id = await models.Region.findOne({
+          where: {
+            region_value: userdata.region
+          },
+          attributes: ['region_id']
+        }).then(res => {
+          console.log('region res:', res);
+          return res.dataValues.region_id
+        })
+      }
 
       console.log('sub_id:', subject_id);
       console.log(region_id);
