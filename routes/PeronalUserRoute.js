@@ -103,4 +103,10 @@ module.exports = app => {
       return res.status(400).send({})
     }
   });
+
+
+  app.post("/api/personaluser/upload", requireAuth.JWToken, async (req, res) => {
+
+  })
+
 }
