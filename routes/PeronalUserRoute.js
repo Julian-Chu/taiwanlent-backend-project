@@ -70,7 +70,7 @@ module.exports = app => {
         region_id: userdata.region_id,
         subject_id: userdata.subject_id,
         photolink: userdata.photolink,
-        resumeIsOpened: userdata.resumeIsOpened
+        resume_open: userdata.resume_open
       }, {
         where: {
           user_personal_id: req.user.user_personal_id
