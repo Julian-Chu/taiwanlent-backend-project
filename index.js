@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({
 require('./routes/authRoute')(app);
 require('./routes/businessUserRoute')(app);
 require('./routes/PeronalUserRoute')(app);
+require('./routes/talentRoute')(app);
 console.log("Server started: port 5000");
 module.exports.app = app;
 app.listen(5000);
