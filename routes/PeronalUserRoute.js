@@ -6,26 +6,6 @@ const requireAuth = require("../middlewares/requireAuth");
 
 
 module.exports = app => {
-  // app.get("/user", (req, res) => {
-  //   PersonalUser.findAll({})
-  //     .then(users => res.status(200).json(users));
-  // });
-
-  // app.get("/user/:id", (req, res) => {
-  //   if (req.params.id != 0) {
-  //     console.log(req.params.id);
-  //     PersonalUser.findOne({
-  //         where:{
-  //           userId: req.params.id
-  //         },
-  //         attributes: { exclude: ['password'] }
-  //       })
-  //       .then(user => res.status(200).json(user));
-  //   } else {
-  //     res.status(400);
-  //   }
-  // });
-
   app.get("/api/personaluser", requireAuth.JWToken, (req, res) => {
     return res.status(200).send(req.user);
   })
@@ -104,7 +84,7 @@ module.exports = app => {
     }
   });
 
-
+  // photo upload
   app.post("/api/personaluser/upload", requireAuth.JWToken, async (req, res) => {
 
   })
