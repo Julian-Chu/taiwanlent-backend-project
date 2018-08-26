@@ -2,6 +2,7 @@
 'use strict'
 const requireAuth = require("../middlewares/requireAuth");
 const models = require('../models/index');
+const Sequelize = require('sequelize');
 
 module.exports = app => {
 
@@ -9,11 +10,31 @@ module.exports = app => {
   // 針對已驗證的登入使用者回傳全部人才資訊
   app.get("/api/talents", requireAuth.JWToken, async (req, res) => {
     try {
+      let excludedFields = ['google_id', 'facebook_id'];
 
       let talents = await models.PersonalUser.findAll({
         where: {
           resume_open: true
+        },
+        include: [{
+            model: models.Gender,
+          },
+          {
+            model: models.Region
+          }, {
+            model: models.Subject
+          }
+        ],
+
+        attributes: {
+          exclude: excludedFields,
+          include: [
+            [Sequelize.literal('gender.gender'), 'gender'],
+            [Sequelize.literal('region.region_value'), 'region'],
+            [Sequelize.literal('subject.subject_value'), 'subject']
+          ]
         }
+
       })
       console.log(talents);
 
