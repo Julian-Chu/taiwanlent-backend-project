@@ -47,9 +47,7 @@ function createTokenForPersonalUser(user) {
 }
 
 function decodeToken(token) {
-  // return jwt.decode(token, keys.jwtSecretKey);
   return jwt.verify(token, keys.jwtSecretKey, function (err, decoded) {
-    console.log('verify jwt:', err);
     return decoded;
   })
 }

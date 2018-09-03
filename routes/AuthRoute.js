@@ -1,7 +1,7 @@
 // @ts-check
 "use strict";
 const models = require("../models/index");
-const BusinessUser = models.UserBusiness;
+const BusinessUser = models.BusinessUser;
 const Mailer = require("../services/Mailer");
 const verifyTemplate = require("../services/emailTemplates/businessUserVerifyTemplate");
 const vtokenEncryption = require("../services/vtokenEncryption");
@@ -19,7 +19,6 @@ module.exports = app => {
     "/auth/google/personal/callback",
     requireAuth.GoogleLoginPersonal,
     (req, res) => {
-      console.log("google personal user callback:", req.user);
       let token = createTokenForPersonalUser(req.user);
       let role = "personal";
       res.redirect(`/login?token=${token}&role=${role}`);
@@ -31,7 +30,6 @@ module.exports = app => {
     "/auth/google/business/callback",
     requireAuth.GoogleLoginBusiness,
     (req, res) => {
-      console.log("google callback:", req.user.dataValues);
       let token = createTokenForBusinessUser(req.user);
       let role = "business";
       res.redirect(`/login?token=${token}&role=${role}`);
@@ -126,12 +124,10 @@ module.exports = app => {
         email: req.user.email
       };
       const mailer = new Mailer(user, verifyTemplate(user));
-      // console.log(user);
       try {
         const response = await mailer.send();
         res.status(201).send(response);
       } catch (err) {
-        // console.log('error to send email verifier');
         res.status(401).send(err);
       }
     }

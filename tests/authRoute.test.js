@@ -7,7 +7,7 @@ const vtokenEncryption = require('../services/vtokenEncryption');
 
 const requireAuth = require('../middlewares/requireAuth');
 const models = require('../models/index');
-const BusinessUser = models.UserBusiness;
+const BusinessUser = models.BusinessUser;
 const Mailer = require('../services/Mailer');
 
 sinon.stub(Mailer.prototype, 'send').callsFake(() => {});
@@ -15,7 +15,7 @@ sinon.stub(Mailer.prototype, 'send').callsFake(() => {});
 sinon.stub(requireAuth, 'LocalLogin')
   .callsFake((req, res, next) => {
     req.user = {
-      userId: '1',
+      user_business_id: '1',
       emailVerified: false
     };
     next();
@@ -85,10 +85,14 @@ describe('Authentication', () => {
         })
         .expect(res => expect(utils.decodeToken(res.body.token)).toMatchObject({
           sub: '1',
+          role: "business_user",
           verified: false
         }))
         .end((err, res) => {
-          if (err) done(err);
+          if (err) {
+            console.log(err);
+            done(err);
+          }
           done();
         })
     })
@@ -206,6 +210,7 @@ describe('Authentication', () => {
             expiredAt: Date.now() + 60 * 1000
           }))
         })
+        .expect(res => expect(res.body).toMatchObject({}))
         .expect(204)
         .end((err, res) => {
           if (err) return done(err);
