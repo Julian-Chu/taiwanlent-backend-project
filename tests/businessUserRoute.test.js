@@ -10,7 +10,7 @@ sinon.stub(requireAuth, 'JWToken').callsFake((req, res, next) => {
   };
   next();
 });
-require('../routes/businessUserRoute')(app);
+require('../routes/BusinessUserRoute')(app);
 
 
 describe('businessUser', () => {
