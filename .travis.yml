@@ -3,6 +3,9 @@ node_js:
   - "10"
 env:
   - NODE_ENV=ci
+  - jwtSecretKey=jwtFakeKey
+  - vtokenKey=vtokenFakeKey
+  - connectionString=postgres://user:password@localhost:5432/postgres
 
 install:
   - npm install
