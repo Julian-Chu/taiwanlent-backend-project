@@ -53,12 +53,12 @@ const jwtOptions = {
 
 const businessUserJwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    console.log('businessUserJwt:', payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user',exp:'1534106991601' }
+    // console.log('businessUserJwt:', payload); //{ sub: 2, iat: 1533073785705, verified: false, role: 'business_user',exp:'1534106991601' }
 
     // let expireTime = new Date(payload.exp).getSeconds();
-    console.log('exp:', payload.exp);
+    // console.log('exp:', payload.exp);
     // console.log('expTime:', expireTime);
-    console.log(Date.now());
+    // console.log(Date.now());
     if (payload.exp <= Date.now()) {
       console.log('token expired');
       return done(null, false);
