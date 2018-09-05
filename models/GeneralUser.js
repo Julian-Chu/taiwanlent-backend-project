@@ -1,6 +1,6 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('user_general', {
     user_id: {
       type: DataTypes.INTEGER,
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       unique: true
     },
-    fackbook_id: {
+    facebook_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       primaryKey: true
@@ -35,6 +35,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   }, {
-    tableName: 'user_general'
+    tableName: 'user_general',
+    schema: "taiwanlent"
   });
 };

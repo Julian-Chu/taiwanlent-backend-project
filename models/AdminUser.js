@@ -17,6 +17,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     }
   }, {
-    tableName: 'user_admin'
+    tableName: 'user_admin',
+    schema: "taiwanlent"
   });
 };

@@ -1,5 +1,4 @@
 module.exports = {
-  // postgresURI: 'postgresql://test:1234@localhost:5433',
   jwtSecretKey: process.env.jwtSecretKey,
   vtokenKey: process.env.vtokenKey,
   connectionString: process.env.connectionString,
@@ -9,5 +8,4 @@ module.exports = {
   googleClientSecret_business: process.env.googleClientSecret_business,
   googleClientID_personal: process.env.googleClientID_personal,
   googleClientSecret_personal: process.env.googleClientSecret_personal,
-
 }
