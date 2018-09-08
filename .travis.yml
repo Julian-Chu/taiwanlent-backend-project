@@ -22,7 +22,7 @@ deploy:
     secure: "$SECRETACCESSKEY"
   region: "eu-central-1"
   app: "taiwanlent-backend"
-  env: "taiwanlent-backend-dev"
+  env: "taiwanlent-backend-env"
   bucket_name: "$BUCKETNAME"
   on:
     branch: develop
