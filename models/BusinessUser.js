@@ -63,7 +63,8 @@ module.exports = function (sequelize, DataTypes) {
     },
     address: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      field: 'address'
     },
     industry: {
       type: DataTypes.STRING(50),
