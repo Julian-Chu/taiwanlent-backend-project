@@ -14,3 +14,15 @@ script:
   - npm run test
 
 warnings_are_errors: false
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESSKEYID
+  secret_access_key:
+    secure: "$SECRETACCESSKEY"
+  region: "eu-central-1"
+  app: "taiwanlent-backend"
+  env: "taiwanlent-backend-dev"
+  bucket_name: "$BUCKETNAME"
+  on:
+    branch: develop

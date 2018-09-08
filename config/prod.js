@@ -10,4 +10,11 @@ module.exports = {
   googleClientID_personal: process.env.googleClientID_personal,
   googleClientSecret_personal: process.env.googleClientSecret_personal,
 
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
+  connectionString: `postgres://${process.env.RDS_USERNAME}:${process.env.RDS_PASSWORD}@${process.env.RDS_HOSTNAME}:${process.env.RDS_PORT}/postgres`
+  // connectionString: 'postgres://postgres:1234@localhost:5432/postgres',
+
 }
