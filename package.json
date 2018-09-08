@@ -4,7 +4,9 @@
   "description": "taiwanlent backend project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node index.js",
+    "startlocalhost": "nodemon --exec babel-node index.js",
+    "start": "node ./node_modules/pm2/bin/pm2 start index.js --name taiwanlent-backend",
+    "poststart": "node ./node_modules/pm2/bin/pm2 logs",
     "startSub": "nodemon --exec babel-node ./DBscripts/index.js",
     "test": "jest",
     "startNewDB": "docker build --no-cache --tag=\"taiwanlent_postgresql\" ./DBscripts/PostgreSQL/ && (docker rm -f postgresdb  ||  echo 'no container named postgresdb') && docker run --name postgresdb  -e POSTGRES_PASSWORD=1234 -h postgres -p 5432:5432 -d taiwanlent_postgresql && docker logs postgresdb"
@@ -43,6 +45,7 @@
     "passport-local": "^1.0.0",
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
+    "pm2": "^3.0.4",
     "sendgrid": "^5.2.3",
     "sequelize": "^4.37.7",
     "sequelize-cli": "^4.0.0"
