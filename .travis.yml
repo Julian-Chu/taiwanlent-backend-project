@@ -3,7 +3,7 @@ cache:
   directories:
     - node_modules
 node_js:
-  - "10"
+  - "8"
 env:
   - NODE_ENV=ci  jwtSecretKey=jwtFakeKey vtokenKey=FakeFakeFakeFakeFakeFakeFakeFake connectionString=postgres://user:password@localhost:5432/postgres googleClientID_business=ci googleClientSecret_business=ci googleClientID_personal=ci googleClientSecret_personal=ci
 
