@@ -19,6 +19,7 @@ require("./routes/TalentRoute")(app);
 require("./routes/AuthRoute")(app);
 require("./routes/BusinessUserRoute")(app);
 require("./routes/PeronalUserRoute")(app);
+require("./routes/TestRoute")(app);
 console.log("Server started: port 5000");
 module.exports.app = app;
 
