@@ -4,7 +4,8 @@ const businessUserGoogleLogin = 'business_google';
 const generialJwtLogin = 'generialJwtLogin';
 const roleBusiness = "business_user";
 const rolePersonal = "personal_user";
-const peronsalUserGoogleLogin = "personal_google"
+const peronsalUserGoogleLogin = "personal_google";
+const FrontendServer = process.env.FrontendServer || "http://localhost:3000";
 
 
 module.exports = {
@@ -14,5 +15,6 @@ module.exports = {
   generialJwtLogin,
   roleBusiness,
   rolePersonal,
-  peronsalUserGoogleLogin
+  peronsalUserGoogleLogin,
+  FrontendServer
 }

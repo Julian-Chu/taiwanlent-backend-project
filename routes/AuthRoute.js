@@ -11,7 +11,7 @@ const createTokenForBusinessUser = require("../utils")
   .createTokenForBusinessUser;
 const createTokenForPersonalUser = require("../utils")
   .createTokenForPersonalUser;
-
+const FrontendServer = require("../dic").FrontendServer;
 module.exports = app => {
   app.get("/auth/google/personal", requireAuth.GoogleLoginPersonal);
 
@@ -32,7 +32,7 @@ module.exports = app => {
     (req, res) => {
       let token = createTokenForBusinessUser(req.user);
       let role = "business";
-      res.redirect(`/login?token=${token}&role=${role}`);
+      res.redirect(`${FrontendServer}/login?token=${token}&role=${role}`);
     }
   );
 
