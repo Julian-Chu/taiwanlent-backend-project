@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "8"
+  - "8.11.4"
 env:
   - NODE_ENV=ci  jwtSecretKey=jwtFakeKey vtokenKey=FakeFakeFakeFakeFakeFakeFakeFake connectionString=postgres://user:password@localhost:5432/postgres googleClientID_business=ci googleClientSecret_business=ci googleClientID_personal=ci googleClientSecret_personal=ci
 
