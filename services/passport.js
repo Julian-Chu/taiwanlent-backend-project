@@ -147,8 +147,14 @@ const personalUserGoogleLogin = new GoogleStrategy({
         return done(null, existingUser);
       } else {
         console.log('user not exist, create new user');
+        let gender = await models.Gender.find({
+          where: {
+            gender: String.prototype.toLocaleLowerCase.call(profile.gender)
+          }
+        });
         const personalUser = await PersonalUser.create({
-          google_id: profile.id
+          google_id: profile.id,
+          gender_id: gender.gender_id
         });
         console.log('peronsalUser:', personalUser);
         return done(null, personalUser);

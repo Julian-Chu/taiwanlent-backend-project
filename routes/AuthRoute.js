@@ -21,7 +21,7 @@ module.exports = app => {
     (req, res) => {
       let token = createTokenForPersonalUser(req.user);
       let role = "personal";
-      res.redirect(`/login?token=${token}&role=${role}`);
+      res.redirect(`${FrontendServer}/login?token=${token}&role=${role}`);
     }
   );
   app.get("/auth/google/business", requireAuth.GoogleLoginBusiness);
