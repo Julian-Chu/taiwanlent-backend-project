@@ -3,6 +3,14 @@
 const models = require('../models/index');
 const PersonalUser = models.UserPersonal;
 const requireAuth = require("../middlewares/requireAuth");
+const AWS = require('aws-sdk');
+const keys = require('../config/key');
+const uuid = require('uuid/v1');
+
+const s3 = new AWS.S3({
+  accessKeyId: keys.taiwanlentBucketKeyId,
+  secretAccessKey: keys.taiwanlentBucketAccessKey
+})
 
 
 module.exports = app => {
@@ -88,5 +96,22 @@ module.exports = app => {
   app.post("/api/personaluser/upload", requireAuth.JWToken, async (req, res) => {
 
   })
+
+  // get presigned url
+  app.get("/api/personaluser/upload", async (req, res) => {
+    const key = `${req.user.userId}/${uuid()}.jpeg`;
+
+    // const key = `test/${uuid()}.jpeg`;
+    s3.getSignedUrl('putObject', {
+      Bucket: 'taiwanlent-bucket',
+      ContentType: 'jpeg',
+      Key: key
+    }, (err, url) => {
+      res.send({
+        key,
+        url
+      })
+    });
+  });
 
 }
