@@ -52,6 +52,7 @@
     "pm2": "^3.0.4",
     "sendgrid": "^5.2.3",
     "sequelize": "^4.37.7",
-    "sequelize-cli": "^4.0.0"
+    "sequelize-cli": "^4.0.0",
+    "uuid": "^3.3.2"
   }
 }
