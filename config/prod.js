@@ -14,7 +14,10 @@ module.exports = {
   user: process.env.RDS_USERNAME,
   password: process.env.RDS_PASSWORD,
   port: process.env.RDS_PORT,
-  connectionString: `postgres://${process.env.RDS_USERNAME}:${process.env.RDS_PASSWORD}@${process.env.RDS_HOSTNAME}:${process.env.RDS_PORT}/postgres`
+  connectionString: `postgres://${process.env.RDS_USERNAME}:${process.env.RDS_PASSWORD}@${process.env.RDS_HOSTNAME}:${process.env.RDS_PORT}/postgres`,
   // connectionString: 'postgres://postgres:1234@localhost:5432/postgres',
+
+  taiwanlentBucketKeyId: process.env.taiwanlentBucketKeyId,
+  taiwanlentBucketAccessKey: process.env.taiwanlentBucketAccessKey
 
 }
