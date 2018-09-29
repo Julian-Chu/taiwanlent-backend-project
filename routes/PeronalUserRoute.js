@@ -9,7 +9,12 @@ const uuid = require('uuid/v1');
 
 const s3 = new AWS.S3({
   accessKeyId: keys.taiwanlentBucketKeyId,
-  secretAccessKey: keys.taiwanlentBucketAccessKey
+  secretAccessKey: keys.taiwanlentBucketAccessKey,
+  signatureVersion: 'v4',
+  region: 'eu-central-1',
+  params: {
+    ACL: 'public-read'
+  }
 })
 
 
@@ -98,13 +103,14 @@ module.exports = app => {
   })
 
   // get presigned url
-  app.get("/api/personaluser/upload", async (req, res) => {
-    const key = `${req.user.userId}/${uuid()}.jpeg`;
+  app.get("/api/personaluser/upload", requireAuth.JWToken, async (req, res) => {
+    console.log('user:', req.user.user_personal_id);
+    const key = `${req.user.user_personal_id}/${uuid()}.png`;
 
     // const key = `test/${uuid()}.jpeg`;
     s3.getSignedUrl('putObject', {
       Bucket: 'taiwanlent-bucket',
-      ContentType: 'jpeg',
+      ContentType: 'image/png',
       Key: key
     }, (err, url) => {
       res.send({
