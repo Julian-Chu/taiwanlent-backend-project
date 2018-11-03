@@ -1,22 +1,9 @@
 // @ts-check
 'use strict'
 const models = require('../models/index');
-const PersonalUser = models.UserPersonal;
 const requireAuth = require("../middlewares/requireAuth");
-const AWS = require('aws-sdk');
-const keys = require('../config/key');
 const uuid = require('uuid/v1');
-
-const s3 = new AWS.S3({
-  accessKeyId: keys.taiwanlentBucketKeyId,
-  secretAccessKey: keys.taiwanlentBucketAccessKey,
-  signatureVersion: 'v4',
-  region: 'eu-central-1',
-  params: {
-    ACL: 'public-read'
-  }
-})
-
+const s3 = require("../services/awsS3");
 
 module.exports = app => {
   app.get("/api/personaluser", requireAuth.JWToken, (req, res) => {
@@ -108,6 +95,7 @@ module.exports = app => {
     const key = `${req.user.user_personal_id}/${uuid()}.png`;
 
     // const key = `test/${uuid()}.jpeg`;
+    // @ts-ignore
     s3.getSignedUrl('putObject', {
       Bucket: 'taiwanlent-bucket',
       ContentType: 'image/png',

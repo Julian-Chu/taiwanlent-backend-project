@@ -1,3 +1,13 @@
-var AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
+const keys = require('../config/key');
+const s3 = new AWS.S3({
+  accessKeyId: keys.taiwanlentBucketKeyId,
+  secretAccessKey: keys.taiwanlentBucketAccessKey,
+  signatureVersion: 'v4',
+  region: 'eu-central-1',
+  params: {
+    ACL: 'public-read'
+  }
+})
 
-var s3 = new AWS.S3();
+export default s3;
