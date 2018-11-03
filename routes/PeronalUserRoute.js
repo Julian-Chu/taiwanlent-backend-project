@@ -84,10 +84,6 @@ module.exports = app => {
     }
   });
 
-  // photo upload
-  app.post("/api/personaluser/upload", requireAuth.JWToken, async (req, res) => {
-
-  })
 
   // get presigned url
   app.get("/api/personaluser/upload", requireAuth.JWToken, async (req, res) => {
