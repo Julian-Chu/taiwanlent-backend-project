@@ -1,13 +1,9 @@
 const AWS = require('aws-sdk');
 const keys = require('../config/key');
-const s3 = new AWS.S3({
+const SES = new AWS.SES({
   accessKeyId: keys.taiwanlentBucketKeyId,
   secretAccessKey: keys.taiwanlentBucketAccessKey,
-  signatureVersion: 'v4',
-  region: 'eu-central-1',
-  params: {
-    ACL: 'public-read'
-  }
-})
+  region: 'eu-west-1',
+});
 
-module.exports = s3;
+module.exports = SES;
