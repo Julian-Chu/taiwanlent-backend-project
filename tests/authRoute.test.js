@@ -62,6 +62,10 @@ sinon.stub(BusinessUser, 'update')
 
 
 var app = require('../index').app;
+var server = require('../index').server;
+afterAll(() => {
+  return server.close();
+})
 describe('Authentication', () => {
   describe('Get /auth/logout', () => {
     it('redirect to /logout', (done) => {
@@ -225,7 +229,10 @@ describe('Authentication', () => {
       request(app)
         .post(route)
         .expect(201)
-        .end(done)
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        })
     })
   })
 

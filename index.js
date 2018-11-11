@@ -36,6 +36,8 @@ require("./routes/BusinessUserRoute")(app);
 require("./routes/PeronalUserRoute")(app);
 require("./routes/TestRoute")(app);
 console.log(`Server started: port ${port}`);
-module.exports.app = app;
-
-app.listen(port);
+let server = app.listen(port);
+module.exports = {
+  app,
+  server
+}
