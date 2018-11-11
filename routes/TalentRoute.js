@@ -3,6 +3,8 @@
 const requireAuth = require("../middlewares/requireAuth");
 const models = require('../models/index');
 const Sequelize = require('sequelize');
+const SES = require("../services/awsSES")
+const keys = require('../config/key');
 
 module.exports = app => {
 
@@ -47,7 +49,64 @@ module.exports = app => {
   });
 
   // 針對選定的人才寄送email
-  app.post('/api/candidates/message', () => {
-
+  /*req.body:
+    {
+      "subject": "Test email",
+      "sender": "sender@test.com",
+      "jobDesc": ".....",
+      "receivers":[
+        "receiver1@test.com",
+        "receiver2@test.com"
+        ]
+    }
+    */
+  app.post("/api/talents/message", (req, res) => {
+    console.log(req.body);
+    // Create sendEmail params 
+    var params = {
+      Destination: { /* required */
+        CcAddresses: [
+          keys.testEmail
+          /* more items */
+        ],
+        ToAddresses: [
+          keys.testEmail
+          /* more items */
+        ]
+      },
+      Message: { /* required */
+        Body: { /* required */
+          Html: {
+            Charset: "UTF-8",
+            Data: "HTML_FORMAT_BODY"
+          },
+          Text: {
+            Charset: "UTF-8",
+            Data: "TEXT_FORMAT_BODY"
+          }
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          Data: 'Test email'
+        }
+      },
+      Source: keys.testEmail,
+      /* required */
+      ReplyToAddresses: [
+        keys.testEmail,
+        /* more items */
+      ],
+    };
+    return res.send("Hello World");
+    // @ts-ignore
+    var sendPromise = SES.sendEmail(params).promise();
+    sendPromise.then((data) => {
+      console.log(data.MessageId);
+      return res.status(204).send(data.MessageId)
+    }).catch((err) => {
+      console.error(err, err.stack);
+      return res.status(400).send(err);
+    })
   })
+
 }
