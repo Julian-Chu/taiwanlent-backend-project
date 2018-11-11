@@ -5,6 +5,7 @@ const models = require('../models/index');
 const Sequelize = require('sequelize');
 const SES = require("../services/awsSES")
 const keys = require('../config/key');
+const emailTemplate = require("../services/emailTemplates/MessageToTalentsTemplate");
 
 module.exports = app => {
 
@@ -52,8 +53,12 @@ module.exports = app => {
   /*req.body:
     {
       "subject": "Test email",
-      "sender": "sender@test.com",
-      "jobDesc": ".....",
+	    "sender": {
+		  "email":"sender@test.com",
+		  "Name":"testUser",
+      "jobDesc":"test",
+      "subject": "Test email"
+	    }
       "receivers":[
         "receiver1@test.com",
         "receiver2@test.com"
@@ -62,6 +67,8 @@ module.exports = app => {
     */
   app.post("/api/talents/message", (req, res) => {
     console.log(req.body);
+    const sender = req.body.sender;
+    const receivers = req.body.receivers;
     // Create sendEmail params 
     var params = {
       Destination: { /* required */
@@ -70,15 +77,19 @@ module.exports = app => {
           /* more items */
         ],
         ToAddresses: [
-          keys.testEmail
-          /* more items */
+          ...receivers
         ]
       },
       Message: { /* required */
         Body: { /* required */
           Html: {
             Charset: "UTF-8",
-            Data: "HTML_FORMAT_BODY"
+            Data: emailTemplate({
+              Name: sender.Name,
+              email: sender.email,
+              jobDesc: sender.jobDesc,
+              subject: sender.subject
+            })
           },
           Text: {
             Charset: "UTF-8",
@@ -97,7 +108,7 @@ module.exports = app => {
         /* more items */
       ],
     };
-    return res.send("Hello World");
+    // return res.send("Hello World");
     // @ts-ignore
     var sendPromise = SES.sendEmail(params).promise();
     sendPromise.then((data) => {
