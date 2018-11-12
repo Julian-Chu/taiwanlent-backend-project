@@ -37,16 +37,12 @@ module.exports = app => {
             [Sequelize.literal('subject.subject_value'), 'subject']
           ]
         }
-
       })
       console.log(talents);
-
       return res.status(200).send(talents);
     } catch (err) {
       console.log('err:', err);
-
     }
-
   });
 
   // 針對選定的人才寄送email

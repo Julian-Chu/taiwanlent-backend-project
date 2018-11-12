@@ -8,7 +8,7 @@ module.exports = app => {
     return res.send(req.user);
   });
 
-  //用戶註冊資料
+  //用戶修改資料
   app.post("/api/businessuser", requireAuth.JWToken, async (req, res) => {
     let user = req.body;
     try {
@@ -33,11 +33,6 @@ module.exports = app => {
       console.log(err);
       return res.status(400).send({});
     }
-  });
-
-  //用戶修改資料
-  app.patch("/api/businessuser", requireAuth.JWToken, (req, res) => {
-    return res.status(200).send({});
   });
 
 };
