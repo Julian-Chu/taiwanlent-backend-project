@@ -9,7 +9,6 @@ const requireAuth = require('../middlewares/requireAuth');
 const models = require('../models/index');
 const BusinessUser = models.BusinessUser;
 const Mailer = require('../services/Mailer');
-const app = require('../app');
 
 sinon.stub(Mailer.prototype, 'send').callsFake(() => {});
 
@@ -61,6 +60,8 @@ sinon.stub(BusinessUser, 'build')
 sinon.stub(BusinessUser, 'update')
   .callsFake(() => {})
 
+/// mock func should be set before initializing instance
+var app = require('../app');
 
 describe('Authentication', () => {
   describe('Get /auth/logout', () => {
