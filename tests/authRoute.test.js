@@ -9,6 +9,7 @@ const requireAuth = require('../middlewares/requireAuth');
 const models = require('../models/index');
 const BusinessUser = models.BusinessUser;
 const Mailer = require('../services/Mailer');
+const app = require('../app');
 
 sinon.stub(Mailer.prototype, 'send').callsFake(() => {});
 
@@ -61,11 +62,6 @@ sinon.stub(BusinessUser, 'update')
   .callsFake(() => {})
 
 
-var app = require('../index').app;
-var server = require('../index').server;
-afterAll(() => {
-  return server.close();
-})
 describe('Authentication', () => {
   describe('Get /auth/logout', () => {
     it('redirect to /logout', (done) => {
