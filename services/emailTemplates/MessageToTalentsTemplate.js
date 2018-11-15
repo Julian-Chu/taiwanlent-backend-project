@@ -3,10 +3,10 @@ module.exports = (businessUser, talent) => {
   <html> 
   <body>
     <div style="text-align: center;">
-      <h3>Here is Taiwanlent. ${businessUser.Name} would like to contact you</h3>
+      <h3>Here is Taiwanlent. ${businessUser.name} would like to contact you</h3>
       <h4>Job Description: </h4>
       <p>
-        ${businessUser.jobDesc}
+        ${businessUser.message}
       </p>
       <label>Please Contact: ${businessUser.email}</label>
       <div>

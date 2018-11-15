@@ -49,13 +49,13 @@ module.exports = app => {
   /*req.body:
     {
       "subject": "Test email",
-	    "sender": {
-		  "email":"sender@test.com",
-		  "Name":"testUser",
-      "jobDesc":"test",
-      "subject": "Test email"
-	    }
-      "receivers":[
+	    "businessUser": {
+		    "email":"sender@test.com",
+		    "name":"testUser",
+      },
+      "message": "....."
+      
+      "candidates":[
         "receiver1@test.com",
         "receiver2@test.com"
         ]
@@ -63,8 +63,11 @@ module.exports = app => {
     */
   app.post("/api/talents/message", (req, res) => {
     console.log(req.body);
-    const sender = req.body.sender;
-    const receivers = req.body.receivers;
+    const businessUser = req.body.businessUser;
+    const candidateEmails = req.body.candidates.map(c => c.email);
+
+    const subject = req.body.subject;
+    const message = req.body.message;
     // Create sendEmail params 
     var params = {
       Destination: { /* required */
@@ -73,7 +76,7 @@ module.exports = app => {
           /* more items */
         ],
         ToAddresses: [
-          ...receivers
+          ...candidateEmails
         ]
       },
       Message: { /* required */
@@ -81,10 +84,10 @@ module.exports = app => {
           Html: {
             Charset: "UTF-8",
             Data: emailTemplate({
-              Name: sender.Name,
-              email: sender.email,
-              jobDesc: sender.jobDesc,
-              subject: sender.subject
+              Name: businessUser.name,
+              email: businessUser.email,
+              message,
+              subject
             })
           },
           Text: {
@@ -94,7 +97,7 @@ module.exports = app => {
         },
         Subject: {
           Charset: 'UTF-8',
-          Data: 'Test email'
+          Data: subject
         }
       },
       Source: keys.testEmail,
